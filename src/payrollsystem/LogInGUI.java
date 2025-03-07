@@ -6,6 +6,7 @@ package payrollsystem;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
@@ -16,9 +17,11 @@ public class LogInGUI extends javax.swing.JFrame {
     private boolean isManagerSelected = false;
     private boolean isEmployeeSelected = false;
     private ValidateLogin vl = new ValidateLogin();
+    private SessionManager sm = SessionManager.getInstance();
     
     public LogInGUI() {
         initComponents();
+        loadingDialog.setModal(true);
     }
 
     /**
@@ -30,9 +33,11 @@ public class LogInGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        loadingDialog = new javax.swing.JDialog();
+        dialogPanel1 = new javax.swing.JPanel();
+        loadingLBL1 = new javax.swing.JLabel();
+        progressBar = new javax.swing.JProgressBar();
         jPanel1 = new javax.swing.JPanel();
-        blueSPRT = new javax.swing.JSeparator();
-        orangeSPRT = new javax.swing.JSeparator();
         loginLBL = new javax.swing.JLabel();
         managerBTN = new javax.swing.JButton();
         employeeBTN = new javax.swing.JButton();
@@ -43,25 +48,69 @@ public class LogInGUI extends javax.swing.JFrame {
         loginBTN = new javax.swing.JButton();
         forgotBTN = new javax.swing.JButton();
         detailsLBL = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         blueICON = new javax.swing.JLabel();
         orangeICON = new javax.swing.JLabel();
         showPassBTN = new javax.swing.JToggleButton();
+
+        loadingDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        loadingDialog.setTitle("Loading...");
+
+        dialogPanel1.setName(""); // NOI18N
+
+        loadingLBL1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        loadingLBL1.setForeground(new java.awt.Color(81, 81, 81));
+        loadingLBL1.setText("Loading...");
+
+        progressBar.setIndeterminate(true);
+
+        javax.swing.GroupLayout dialogPanel1Layout = new javax.swing.GroupLayout(dialogPanel1);
+        dialogPanel1.setLayout(dialogPanel1Layout);
+        dialogPanel1Layout.setHorizontalGroup(
+            dialogPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogPanel1Layout.createSequentialGroup()
+                .addGroup(dialogPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(dialogPanel1Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(loadingLBL1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        dialogPanel1Layout.setVerticalGroup(
+            dialogPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(loadingLBL1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout loadingDialogLayout = new javax.swing.GroupLayout(loadingDialog.getContentPane());
+        loadingDialog.getContentPane().setLayout(loadingDialogLayout);
+        loadingDialogLayout.setHorizontalGroup(
+            loadingDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dialogPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        loadingDialogLayout.setVerticalGroup(
+            loadingDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dialogPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1920, 1080));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        blueSPRT.setForeground(new java.awt.Color(12, 48, 128));
-
-        orangeSPRT.setForeground(new java.awt.Color(235, 142, 39));
-
-        loginLBL.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        loginLBL.setFont(new java.awt.Font("Dialog", 1, 38)); // NOI18N
         loginLBL.setForeground(new java.awt.Color(81, 81, 81));
         loginLBL.setText("Log in");
 
         managerBTN.setBackground(new java.awt.Color(81, 81, 81));
-        managerBTN.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        managerBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         managerBTN.setForeground(new java.awt.Color(255, 255, 255));
         managerBTN.setText("MANAGER");
         managerBTN.setBorder(null);
@@ -77,7 +126,7 @@ public class LogInGUI extends javax.swing.JFrame {
         });
 
         employeeBTN.setBackground(new java.awt.Color(81, 81, 81));
-        employeeBTN.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        employeeBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         employeeBTN.setForeground(new java.awt.Color(255, 255, 255));
         employeeBTN.setText("EMPLOYEE");
         employeeBTN.setBorder(null);
@@ -92,11 +141,11 @@ public class LogInGUI extends javax.swing.JFrame {
             }
         });
 
-        userLBL.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        userLBL.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         userLBL.setForeground(new java.awt.Color(81, 81, 81));
         userLBL.setText("User");
 
-        passwordLBL.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        passwordLBL.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         passwordLBL.setForeground(new java.awt.Color(81, 81, 81));
         passwordLBL.setText("Password");
 
@@ -107,7 +156,7 @@ public class LogInGUI extends javax.swing.JFrame {
         });
 
         loginBTN.setBackground(new java.awt.Color(63, 0, 255));
-        loginBTN.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        loginBTN.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         loginBTN.setForeground(new java.awt.Color(255, 255, 255));
         loginBTN.setText("LOG IN");
         loginBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +190,27 @@ public class LogInGUI extends javax.swing.JFrame {
         detailsLBL.setForeground(new java.awt.Color(169, 169, 169));
         detailsLBL.setText("Enter your details");
 
+        jPanel2.setBackground(new java.awt.Color(248, 248, 248));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/laptop.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+
         blueICON.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/smallogo.png"))); // NOI18N
 
         orangeICON.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/smallogo2.png"))); // NOI18N
@@ -160,51 +230,42 @@ public class LogInGUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(orangeICON)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(blueICON)
-                .addGap(744, 744, 744))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(orangeSPRT, javax.swing.GroupLayout.PREFERRED_SIZE, 767, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(611, 611, 611)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(orangeICON)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(blueICON))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(userLBL)
+                                .addComponent(userTF, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(passwordLBL)
                                 .addComponent(forgotBTN)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(passwordLBL)
-                                        .addComponent(loginLBL)
-                                        .addComponent(userLBL)
-                                        .addComponent(userTF)
-                                        .addComponent(passwordTF)
-                                        .addComponent(loginBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(managerBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(employeeBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(showPassBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(detailsLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(354, 354, 354)
-                            .addComponent(blueSPRT, javax.swing.GroupLayout.PREFERRED_SIZE, 767, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(399, Short.MAX_VALUE))
+                                .addComponent(loginBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(loginLBL)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(managerBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(employeeBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(detailsLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(passwordTF, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(showPassBTN)))))
+                .addContainerGap(382, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(blueSPRT, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(orangeSPRT, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(227, 227, 227)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(managerBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(employeeBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(loginLBL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(detailsLBL)
@@ -212,7 +273,7 @@ public class LogInGUI extends javax.swing.JFrame {
                 .addComponent(userLBL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(userTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(passwordLBL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -220,13 +281,14 @@ public class LogInGUI extends javax.swing.JFrame {
                     .addComponent(showPassBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(forgotBTN)
-                .addGap(30, 30, 30)
+                .addGap(31, 31, 31)
                 .addComponent(loginBTN)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(orangeICON)
                     .addComponent(blueICON))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -243,33 +305,121 @@ public class LogInGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void managerBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managerBTNActionPerformed
-        
-        //For other methods to check if the manager button is selected or not
-        isManagerSelected=true;
-        isEmployeeSelected=false;
-        
-    }//GEN-LAST:event_managerBTNActionPerformed
+    private void forgotBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forgotBTNActionPerformed
+
+        //Calling the GUI that handles resetting the password
+        ResetPasswordGUI f = new ResetPasswordGUI();
+        f.setVisible(true);
+    }//GEN-LAST:event_forgotBTNActionPerformed
+
+    private void forgotBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotBTNMouseReleased
+
+    }//GEN-LAST:event_forgotBTNMouseReleased
+
+    private void forgotBTNMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotBTNMousePressed
+
+    }//GEN-LAST:event_forgotBTNMousePressed
+
+    private void loginBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBTNActionPerformed
+
+        if (checkEmpty()) {
+            loadingDialog.setSize(210, 100);
+            loadingDialog.setLocationRelativeTo(null);
+            SwingUtilities.invokeLater(() -> loadingDialog.setVisible(true));
+
+            SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Boolean doInBackground() {
+                    boolean verify = false; // Default to false
+
+                    // Check user identity
+                    if (isEmployeeSelected) {
+                        verify = vl.checkCredentials("employee_logins", userTF.getText().trim(), new String(passwordTF.getPassword()));
+                    } else if (isManagerSelected) {
+                        verify = vl.checkCredentials("manager_logins", userTF.getText().trim(), new String(passwordTF.getPassword()));
+                    }
+
+                    return verify;
+                }
+
+                @Override
+                protected void done() {
+                    // Close the loading popup
+                    SwingUtilities.invokeLater(() -> loadingDialog.dispose());
+
+                    try {
+                        boolean verify = get(); // Get result from doInBackground
+
+                        if (verify) {
+                            if (isEmployeeSelected){
+                                sm.setUser(userTF.getText().trim());
+                                EditEmployeeInfoGUI ei = new EditEmployeeInfoGUI();
+                                ei.setVisible(true);
+                                dispose();
+                            } else {
+                                // Successful login, set session and open Payroll GUI
+                                sm.setUser(userTF.getText().trim());
+                                PayrollGUI pg = new PayrollGUI();
+                                pg.setVisible(true);
+                                dispose();
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "An error occurred during login.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            };
+
+            worker.execute(); // Start the background task
+
+        }
+    }//GEN-LAST:event_loginBTNActionPerformed
 
     private void passwordTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordTFActionPerformed
 
     private void employeeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeBTNActionPerformed
-      
+
         //For other methods to check if the employee button is selected or not
         isEmployeeSelected=true;
         isManagerSelected=false;
-        
     }//GEN-LAST:event_employeeBTNActionPerformed
 
-    private void forgotBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forgotBTNActionPerformed
+    private void employeeBTNMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeBTNMousePressed
 
-        //Calling the GUI that handles resetting the password
-        ForgotPasswordGUI f = new ForgotPasswordGUI();
-        f.setVisible(true);
-        
-    }//GEN-LAST:event_forgotBTNActionPerformed
+        //Changing the label and button color when employee button is pressed
+        userLBL.setText("Employee Username");
+        employeeBTN.setBackground(new Color(235,142,39));
+        managerBTN.setBackground(new Color(81,81,81));
+    }//GEN-LAST:event_employeeBTNMousePressed
+
+    private void managerBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managerBTNActionPerformed
+
+        //For other methods to check if the manager button is selected or not
+        isManagerSelected=true;
+        isEmployeeSelected=false;
+    }//GEN-LAST:event_managerBTNActionPerformed
+
+    private void managerBTNMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_managerBTNMousePressed
+
+        //Changing the label and button color when manager button is selected
+        userLBL.setText("Manager Username");
+        managerBTN.setBackground(new Color(12,48,128));
+        employeeBTN.setBackground(new Color(81,81,81));
+    }//GEN-LAST:event_managerBTNMousePressed
+
+    private void showPassBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPassBTNActionPerformed
+       //If button is selected, show password
+        if (showPassBTN.isSelected()) {
+            passwordTF.setEchoChar((char) 0);
+        } else {
+            //If not, keep it hidden
+            passwordTF.setEchoChar('•');
+        }
+    }//GEN-LAST:event_showPassBTNActionPerformed
 
     private boolean checkEmpty(){
     
@@ -287,69 +437,6 @@ public class LogInGUI extends javax.swing.JFrame {
         
         return true;
     }
-
-    private void loginBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBTNActionPerformed
-
-        //If all form is filled, proceed
-        if (checkEmpty()){   
-            //Using a boolean to check if identity was verified
-            boolean verify = true;
-
-            //Passing values to the method that handles identity checking
-            if (isEmployeeSelected){
-                verify = vl.checkCredentials("employee_logins", userTF.getText().trim(), new String(passwordTF.getPassword()));
-            } else if (isManagerSelected){
-                verify = vl.checkCredentials("manager_logins", userTF.getText().trim(), new String(passwordTF.getPassword()));
-            }
-
-            //Depending on whether the identity has been verified or not, show message to user
-            if (verify){
-                PayrollGUI p = new PayrollGUI();
-                p.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid username or password.");
-            }
-        }
-    }//GEN-LAST:event_loginBTNActionPerformed
-
-    private void managerBTNMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_managerBTNMousePressed
-
-        //Changing the label and button color when manager button is selected
-        userLBL.setText("Manager Username");
-        managerBTN.setBackground(new Color(12,48,128));
-        employeeBTN.setBackground(new Color(81,81,81));
-        
-    }//GEN-LAST:event_managerBTNMousePressed
-
-    private void employeeBTNMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeBTNMousePressed
-
-        //Changing the label and button color when employee button is pressed        
-        userLBL.setText("Employee Username");
-        employeeBTN.setBackground(new Color(235,142,39));
-        managerBTN.setBackground(new Color(81,81,81));
-        
-    }//GEN-LAST:event_employeeBTNMousePressed
-
-    private void forgotBTNMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotBTNMousePressed
-
-  
-    }//GEN-LAST:event_forgotBTNMousePressed
-
-    private void forgotBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotBTNMouseReleased
-       
-        
-    }//GEN-LAST:event_forgotBTNMouseReleased
-
-    private void showPassBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPassBTNActionPerformed
-        //If button is selected, show password
-        if (showPassBTN.isSelected()) {
-            passwordTF.setEchoChar((char) 0);
-        } else {
-            //If not, keep it hidden
-            passwordTF.setEchoChar('•');
-        }
-    }//GEN-LAST:event_showPassBTNActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,18 +475,22 @@ public class LogInGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel blueICON;
-    private javax.swing.JSeparator blueSPRT;
     private javax.swing.JLabel detailsLBL;
+    private javax.swing.JPanel dialogPanel1;
     private javax.swing.JButton employeeBTN;
     private javax.swing.JButton forgotBTN;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JDialog loadingDialog;
+    private javax.swing.JLabel loadingLBL1;
     private javax.swing.JButton loginBTN;
     private javax.swing.JLabel loginLBL;
     private javax.swing.JButton managerBTN;
     private javax.swing.JLabel orangeICON;
-    private javax.swing.JSeparator orangeSPRT;
     private javax.swing.JLabel passwordLBL;
     private javax.swing.JPasswordField passwordTF;
+    private javax.swing.JProgressBar progressBar;
     private javax.swing.JToggleButton showPassBTN;
     private javax.swing.JLabel userLBL;
     private javax.swing.JTextField userTF;

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package payrollsystem;
 
 import java.sql.Connection;
@@ -17,7 +13,7 @@ public class ValidateLogin {
     
         query = "SELECT * FROM " + table + " WHERE username = ? AND password_hash = ?";
         
-            try (Connection con = DbManager.getConnection();
+            try (Connection con = DatabaseManager.getConnection();
                  PreparedStatement ps = con.prepareStatement(query)){
                 //ID parameter
                 ps.setString(1, username); 

@@ -4,17 +4,9 @@
  */
 package payrollsystem;
 
-import java.awt.Color;
-import javax.swing.JOptionPane;
-import java.sql.*;
 
 public class PayrollGUI extends javax.swing.JFrame {
 
-    private static final String db_url = "jdbc:mysql://database-1.cvu4aceii2zn.eu-west-1.rds.amazonaws.com:3306/Payroll";
-    private static final String db_username = "root";
-    private static final String db_password = "payrollpassword";
-    private static Connection con = null;
-    
     public PayrollGUI() {
         initComponents();
     }
@@ -93,11 +85,21 @@ public class PayrollGUI extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("financial report");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(33, 118, 206));
         jButton6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("review submissions");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setBackground(new java.awt.Color(33, 118, 206));
         jButton7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -163,6 +165,18 @@ public class PayrollGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       EmployeeStatementGUI s = new EmployeeStatementGUI();
+       s.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       SubmissionApprovalGUI sa = new SubmissionApprovalGUI();
+       sa.setVisible(true);
+       this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     
     /**
