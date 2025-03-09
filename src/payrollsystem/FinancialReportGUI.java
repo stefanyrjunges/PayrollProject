@@ -14,7 +14,6 @@ import javax.swing.SwingWorker;
  */
 public class FinancialReportGUI extends javax.swing.JFrame {
 
-    private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
     private final EmployeeDataFetcher dataFetcher = new EmployeeDataFetcher();
     private final StatementGenerator statementGenerator = new StatementGenerator();
     
@@ -24,7 +23,6 @@ public class FinancialReportGUI extends javax.swing.JFrame {
     public FinancialReportGUI() {
         initComponents();
         dataFetcher.loadUserInformation("manager_id", "manager_logins", "managers");
-        subtitleLBL.setText("Hello, " + employeeInfo.getName());
         scrollPane.setVisible(false);
         openBTN.setVisible(false);
         statementGenerator.loadPastPDFs(pdfList);
@@ -53,7 +51,6 @@ public class FinancialReportGUI extends javax.swing.JFrame {
         backBTN = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         titleLBL = new javax.swing.JLabel();
-        subtitleLBL = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         loadingDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -162,7 +159,7 @@ public class FinancialReportGUI extends javax.swing.JFrame {
         backBTN.setBackground(new java.awt.Color(33, 118, 206));
         backBTN.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         backBTN.setForeground(new java.awt.Color(255, 255, 255));
-        backBTN.setText("RETURN TO MAIN PAGE");
+        backBTN.setText("RETURN TO DASHBOARD");
         backBTN.setBorder(null);
         backBTN.setBorderPainted(false);
         backBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -191,7 +188,7 @@ public class FinancialReportGUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(657, 657, 657)
                         .addComponent(backBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(1005, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,10 +214,6 @@ public class FinancialReportGUI extends javax.swing.JFrame {
         titleLBL.setForeground(new java.awt.Color(255, 255, 255));
         titleLBL.setText("FINANCIAL REPORT");
 
-        subtitleLBL.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        subtitleLBL.setForeground(new java.awt.Color(255, 255, 255));
-        subtitleLBL.setText("Hello");
-
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/PAYROLL_LOGO_m.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -229,26 +222,22 @@ public class FinancialReportGUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(107, 107, 107)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLBL)
-                    .addComponent(subtitleLBL))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1326, Short.MAX_VALUE)
+                .addComponent(titleLBL)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(143, 143, 143))
+                .addGap(478, 478, 478))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(titleLBL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(subtitleLBL))
+                        .addGap(59, 59, 59)
+                        .addComponent(titleLBL))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -309,8 +298,8 @@ public class FinancialReportGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_openBTNActionPerformed
 
     private void backBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBTNActionPerformed
-        PayrollGUI pg = new PayrollGUI();
-        pg.setVisible(true);
+        ManagerDashboard mngDashboard = new ManagerDashboard();
+        mngDashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBTNActionPerformed
 
@@ -364,7 +353,6 @@ public class FinancialReportGUI extends javax.swing.JFrame {
     private javax.swing.JList<String> pdfList;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JScrollPane scrollPane;
-    private javax.swing.JLabel subtitleLBL;
     private javax.swing.JLabel titleLBL;
     // End of variables declaration//GEN-END:variables
 }

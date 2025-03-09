@@ -20,7 +20,6 @@ public class EditEmployeeInfoGUI extends javax.swing.JFrame {
         initComponents();
         dataFetcher.loadUserInformation("employee_id", "employee_logins", "employees");
         loadForm();
-        subtitleLBL.setText("Hello, " + employeeInfo.getName());
         saveBTN.setVisible(false);
         cancelBTN.setVisible(false);
     }
@@ -38,7 +37,6 @@ public class EditEmployeeInfoGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         titleLBL = new javax.swing.JLabel();
         iconLBL = new javax.swing.JLabel();
-        subtitleLBL = new javax.swing.JLabel();
         fNameLBL = new javax.swing.JLabel();
         idLBL = new javax.swing.JLabel();
         rateLBL = new javax.swing.JLabel();
@@ -76,21 +74,13 @@ public class EditEmployeeInfoGUI extends javax.swing.JFrame {
 
         iconLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/PAYROLL_LOGO_E.png"))); // NOI18N
 
-        subtitleLBL.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
-        subtitleLBL.setForeground(new java.awt.Color(255, 255, 255));
-        subtitleLBL.setText("Hello,");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(98, 98, 98)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLBL)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(subtitleLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(titleLBL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
                 .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(143, 143, 143))
@@ -98,16 +88,13 @@ public class EditEmployeeInfoGUI extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(titleLBL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(subtitleLBL)
-                        .addGap(12, 12, 12)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(titleLBL)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -304,7 +291,7 @@ public class EditEmployeeInfoGUI extends javax.swing.JFrame {
         backBTN1.setBackground(new java.awt.Color(235, 142, 39));
         backBTN1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         backBTN1.setForeground(new java.awt.Color(255, 255, 255));
-        backBTN1.setText("RETURN TO MAIN PAGE");
+        backBTN1.setText("RETURN TO DASHBOARD");
         backBTN1.setBorder(null);
         backBTN1.setBorderPainted(false);
         backBTN1.addActionListener(new java.awt.event.ActionListener() {
@@ -527,8 +514,8 @@ public class EditEmployeeInfoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBTNActionPerformed
 
     private void backBTN1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBTN1ActionPerformed
-        PayrollGUI pg = new PayrollGUI();
-        pg.setVisible(true);
+        EmployeeGUI empDashboard = new EmployeeGUI();
+        empDashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBTN1ActionPerformed
 
@@ -571,7 +558,6 @@ public class EditEmployeeInfoGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLBL;
     private javax.swing.JTextField addressTF;
-    private javax.swing.JButton backBTN;
     private javax.swing.JButton backBTN1;
     private javax.swing.JButton cancelBTN;
     private javax.swing.JButton editBTN;
@@ -595,7 +581,6 @@ public class EditEmployeeInfoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel rateLBL;
     private javax.swing.JTextField rateTF;
     private javax.swing.JButton saveBTN;
-    private javax.swing.JLabel subtitleLBL;
     private javax.swing.JLabel titleLBL;
     // End of variables declaration//GEN-END:variables
 }

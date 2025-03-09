@@ -13,14 +13,12 @@ import javax.swing.SwingWorker;
 
 public class EmployeeStatementGUI extends javax.swing.JFrame {
     
-    private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
     private final EmployeeDataFetcher dataFetcher = new EmployeeDataFetcher();
     private final StatementGenerator statementGenerator = new StatementGenerator();
     
     public EmployeeStatementGUI() {
         initComponents();
         dataFetcher.loadUserInformation("employee_id", "employee_logins", "employees");
-        subtitleLBL.setText("Hello, " + employeeInfo.getName());
         scrollPane.setVisible(false);
         openBTN.setVisible(false);
         statementGenerator.loadPastPDFs(pdfList);
@@ -43,7 +41,6 @@ public class EmployeeStatementGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         titleLBL = new javax.swing.JLabel();
         iconLBL = new javax.swing.JLabel();
-        subtitleLBL = new javax.swing.JLabel();
         generateBTN = new javax.swing.JButton();
         pdfICON = new javax.swing.JLabel();
         generatePreviousBTN = new javax.swing.JButton();
@@ -112,19 +109,13 @@ public class EmployeeStatementGUI extends javax.swing.JFrame {
 
         iconLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/PAYROLL_LOGO_E.png"))); // NOI18N
 
-        subtitleLBL.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
-        subtitleLBL.setForeground(new java.awt.Color(255, 255, 255));
-        subtitleLBL.setText("Hello,");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLBL)
-                    .addComponent(subtitleLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(99, 99, 99)
+                .addComponent(titleLBL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(143, 143, 143))
@@ -132,16 +123,13 @@ public class EmployeeStatementGUI extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(titleLBL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(subtitleLBL)
-                        .addGap(12, 12, 12)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(titleLBL)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -313,8 +301,8 @@ public class EmployeeStatementGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_openBTNActionPerformed
 
     private void backBTN1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBTN1ActionPerformed
-        PayrollGUI pg = new PayrollGUI();
-        pg.setVisible(true);
+        EmployeeGUI empDashboard = new EmployeeGUI();
+        empDashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBTN1ActionPerformed
 
@@ -369,7 +357,6 @@ public class EmployeeStatementGUI extends javax.swing.JFrame {
     private javax.swing.JList<String> pdfList;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JScrollPane scrollPane;
-    private javax.swing.JLabel subtitleLBL;
     private javax.swing.JLabel titleLBL;
     // End of variables declaration//GEN-END:variables
 }

@@ -240,12 +240,11 @@ public class LogInGUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(userLBL)
-                                .addComponent(userTF, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(passwordLBL)
-                                .addComponent(forgotBTN)
-                                .addComponent(loginBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(userLBL)
+                            .addComponent(userTF, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passwordLBL)
+                            .addComponent(forgotBTN)
+                            .addComponent(loginBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(loginLBL)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(managerBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,21 +352,21 @@ public class LogInGUI extends javax.swing.JFrame {
                         if (verify) {
                             if (isEmployeeSelected){
                                 sm.setUser(userTF.getText().trim());
-                                EditEmployeeInfoGUI ei = new EditEmployeeInfoGUI();
-                                ei.setVisible(true);
+                                EmployeeGUI empDashboard = new EmployeeGUI();
+                                empDashboard.setVisible(true);
                                 dispose();
                             } else {
                                 // Successful login, set session and open Payroll GUI
                                 sm.setUser(userTF.getText().trim());
-                                PayrollGUI pg = new PayrollGUI();
-                                pg.setVisible(true);
+                                ManagerDashboard mngDashboard = new ManagerDashboard();
+                                mngDashboard.setVisible(true);
                                 dispose();
                             }
                         } else {
                             JOptionPane.showMessageDialog(null, "Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "An error occurred during login.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "An error occurred during login." + e, "Error: ", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             };
@@ -412,7 +411,7 @@ public class LogInGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_managerBTNMousePressed
 
     private void showPassBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPassBTNActionPerformed
-       //If button is selected, show password
+        //If button is selected, show password
         if (showPassBTN.isSelected()) {
             passwordTF.setEchoChar((char) 0);
         } else {

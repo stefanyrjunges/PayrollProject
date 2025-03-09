@@ -19,7 +19,6 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
         sendRefreshBTN.setVisible(false);
         reasonTA.setVisible(false);
         reasonLBL.setVisible(false);
-        subtitleLBL.setText("Hello, " + employeeInfo.getName());
     }
 
     /**
@@ -34,7 +33,6 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         titleLBL = new javax.swing.JLabel();
-        subtitleLBL = new javax.swing.JLabel();
         iconLBL = new javax.swing.JLabel();
         empIdLBL = new javax.swing.JLabel();
         daysWorkedLBL = new javax.swing.JLabel();
@@ -65,10 +63,6 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
         titleLBL.setForeground(new java.awt.Color(255, 255, 255));
         titleLBL.setText("REVIEW SUBMISSIONS");
 
-        subtitleLBL.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        subtitleLBL.setForeground(new java.awt.Color(255, 255, 255));
-        subtitleLBL.setText("Hello,");
-
         iconLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/PAYROLL_LOGO_m.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -76,11 +70,9 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLBL)
-                    .addComponent(subtitleLBL))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 790, Short.MAX_VALUE)
+                .addGap(102, 102, 102)
+                .addComponent(titleLBL)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 795, Short.MAX_VALUE)
                 .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(147, 147, 147))
         );
@@ -88,13 +80,12 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(titleLBL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(subtitleLBL)))
+                .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(titleLBL)
+                .addGap(42, 42, 42))
         );
 
         empIdLBL.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -198,7 +189,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
         backBTN.setBackground(new java.awt.Color(33, 118, 206));
         backBTN.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         backBTN.setForeground(new java.awt.Color(255, 255, 255));
-        backBTN.setText("RETURN TO MAIN PAGE");
+        backBTN.setText("RETURN TO DASHBOARD");
         backBTN.setBorder(null);
         backBTN.setBorderPainted(false);
         backBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -290,9 +281,9 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
                 .addComponent(reasonTA, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(sendRefreshBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
                 .addComponent(backBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -394,8 +385,8 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_sendRefreshBTNActionPerformed
 
     private void backBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBTNActionPerformed
-        PayrollGUI pg = new PayrollGUI();
-        pg.setVisible(true);
+        ManagerDashboard mngDashboard = new ManagerDashboard();
+        mngDashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backBTNActionPerformed
 
@@ -460,7 +451,6 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
     private javax.swing.JTextArea reasonTA;
     private javax.swing.JButton rejectBTN;
     private javax.swing.JButton sendRefreshBTN;
-    private javax.swing.JLabel subtitleLBL;
     private javax.swing.JLabel titleLBL;
     private javax.swing.JLabel warningLBL;
     // End of variables declaration//GEN-END:variables

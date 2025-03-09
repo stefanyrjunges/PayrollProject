@@ -26,9 +26,11 @@ public class StatementGenerator {
     private final FinanceDataFetcher fm = new FinanceDataFetcher();
     DefaultListModel<String> listModel;
     
+    public StatementGenerator(){
+        fm.loadEmployeeFinance(employeeInfo.getId());
+    }
+    
     public void generateEmployeeStatement() throws IOException {
-        
-       fm.loadEmployeeFinance(employeeInfo.getId());
        
        File directory = new File("statements"); // Relative path
        
@@ -36,7 +38,7 @@ public class StatementGenerator {
            directory.mkdir(); // Create directory if it doesn't exist
        }
        
-       String dest = "statements/Week" + employeeInfo.getWeekNumber() + "_statement.pdf";
+       String dest = "statements/Week" + employeeInfo.getWeekNumber() + "Statement.pdf";
        
        try{
        PdfWriter pw = new PdfWriter(dest);
