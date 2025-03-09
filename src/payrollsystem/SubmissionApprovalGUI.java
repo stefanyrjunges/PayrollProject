@@ -17,7 +17,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
         dataFetcher.loadUserInformation("manager_id", "manager_logins", "managers");
         financeFetcher.loadAllEmployeesFinance();
         sendRefreshBTN.setVisible(false);
-        reasonTF.setVisible(false);
+        reasonTA.setVisible(false);
         reasonLBL.setVisible(false);
         subtitleLBL.setText("Hello, " + employeeInfo.getName());
     }
@@ -45,7 +45,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
         empIdTF = new javax.swing.JTextField();
         hoursWorkedTF = new javax.swing.JTextField();
         warningLBL = new javax.swing.JLabel();
-        reasonTF = new javax.swing.JTextArea();
+        reasonTA = new javax.swing.JTextArea();
         reasonLBL = new javax.swing.JLabel();
         sendRefreshBTN = new javax.swing.JButton();
         estSalaryLBL = new javax.swing.JLabel();
@@ -161,12 +161,12 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
         warningLBL.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         warningLBL.setText("You have pending submissions to review for Week");
 
-        reasonTF.setColumns(20);
-        reasonTF.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        reasonTF.setForeground(new java.awt.Color(81, 81, 81));
-        reasonTF.setLineWrap(true);
-        reasonTF.setRows(5);
-        reasonTF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(81, 81, 81)));
+        reasonTA.setColumns(20);
+        reasonTA.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        reasonTA.setForeground(new java.awt.Color(81, 81, 81));
+        reasonTA.setLineWrap(true);
+        reasonTA.setRows(5);
+        reasonTA.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(81, 81, 81)));
 
         reasonLBL.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         reasonLBL.setText("Reason for rejection:");
@@ -251,7 +251,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
                             .addComponent(daysWorkedTF, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(empIdTF, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(empNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(reasonTF))
+                    .addComponent(reasonTA))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -287,8 +287,8 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(reasonLBL)
                 .addGap(12, 12, 12)
-                .addComponent(reasonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addComponent(reasonTA, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
                 .addComponent(sendRefreshBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(backBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -324,7 +324,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
     public void update() {
 
         HoursSubmissionData submissionData = submissionManager.loadStatus();
-
+        
         if (submissionData.isPending()) {
             empNameTF.setText(submissionData.getEmployeeName());
             empIdTF.setText(String.valueOf(submissionData.getEmployeeId()));
@@ -337,6 +337,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
             hoursWorkedTF.setVisible(true);
             estSalaryTF.setVisible(true);
             daysWorkedTF.setVisible(true);
+            reasonTA.setText(" ");
             
         } else {
             warningLBL.setText("No pending approvals.");
@@ -366,14 +367,14 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
     public void rejectHours() {
         if (!empIdTF.getText().isEmpty()) {
             int employeeId = Integer.parseInt(empIdTF.getText());
-            submissionManager.rejectHours(employeeId);
+            submissionManager.rejectHours(employeeId, reasonTA.getText());
             update();
         }
     }
     
     private void rejectBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectBTNActionPerformed
         sendRefreshBTN.setVisible(true);
-        reasonTF.setVisible(true);
+        reasonTA.setVisible(true);
         reasonLBL.setVisible(true);
     }//GEN-LAST:event_rejectBTNActionPerformed
 
@@ -386,10 +387,10 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_approveBTNActionPerformed
 
     private void sendRefreshBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendRefreshBTNActionPerformed
-       rejectHours();
-       reasonTF.setVisible(false);
-       reasonLBL.setVisible(false);
-       sendRefreshBTN.setVisible(false);
+        rejectHours();
+        reasonTA.setVisible(false);
+        reasonLBL.setVisible(false);
+        sendRefreshBTN.setVisible(false);
     }//GEN-LAST:event_sendRefreshBTNActionPerformed
 
     private void backBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBTNActionPerformed
@@ -456,7 +457,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel reasonLBL;
-    private javax.swing.JTextArea reasonTF;
+    private javax.swing.JTextArea reasonTA;
     private javax.swing.JButton rejectBTN;
     private javax.swing.JButton sendRefreshBTN;
     private javax.swing.JLabel subtitleLBL;

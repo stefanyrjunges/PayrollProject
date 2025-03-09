@@ -78,7 +78,7 @@
                               <Component id="empNameTF" min="-2" pref="379" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="reasonTF" alignment="0" max="32767" attributes="0"/>
+                      <Component id="reasonTA" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -123,8 +123,8 @@
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Component id="reasonLBL" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Component id="reasonTF" min="-2" pref="121" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="reasonTA" min="-2" pref="106" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Component id="sendRefreshBTN" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace pref="71" max="32767" attributes="0"/>
                   <Component id="backBTN" min="-2" pref="28" max="-2" attributes="0"/>
@@ -328,7 +328,7 @@
             <Property name="text" type="java.lang.String" value="You have pending submissions to review for Week"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextArea" name="reasonTF">
+        <Component class="javax.swing.JTextArea" name="reasonTA">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
