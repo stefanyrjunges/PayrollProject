@@ -4,6 +4,7 @@
  */
 package payrollsystem;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -16,8 +17,10 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 /**
@@ -32,187 +35,251 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
     }
     
 
-    public List<HolidayRequest> getHolidayRequests() {
+     public List<HolidayRequest> getHolidayRequests() {
         List<HolidayRequest> requests = new ArrayList<>();
-
         try (Connection conn = DatabaseManager.getConnection()) {
-            String sql = "SELECT holiday_id, employee_id, start_week, end_week, employee_reason FROM holiday_requests WHERE approval_status = 'Pending'";
+            String sql = "SELECT holiday_id, employee_id, start_week, end_week, employee_reason " +
+                         "FROM holiday_requests WHERE approval_status = 'Pending'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 HolidayRequest request = new HolidayRequest(
                     rs.getInt("holiday_id"),
                     rs.getInt("employee_id"),
                     rs.getString("start_week"),
                     rs.getString("end_week"),
-                    rs.getString("employee_reason")  // Getting the employee's reason
+                    rs.getString("employee_reason")
                 );
                 requests.add(request);
             }
         } catch (SQLException e) {
-            System.out.println("Error: " + e);
+            System.out.println("Error retrieving holiday requests: " + e.getMessage());
         }
-
         return requests;
-    } 
+    }
 
+    private EmployeeInfo getEmployeeInfo(int employeeId) {
+        EmployeeInfo employee = null;
+        try (Connection conn = DatabaseManager.getConnection()) {
+            String sql = "SELECT fname, lname, position FROM employees WHERE employee_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, employeeId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Use the singleton instance and set the data from the database
+                employee = EmployeeInfo.getInstance();
+                employee.setfName(rs.getString("fname"));
+                employee.setlName(rs.getString("lname"));
+                employee.setRole(rs.getString("role"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving employee info: " + e.getMessage());
+        }
+        return employee;
+    }
 
     public void generateRequestForms(JPanel panel) {
-        panel.removeAll(); // Clear previous content
+            panel.removeAll();
+            panel.setLayout(new BorderLayout());
 
-        // Get the list of holiday requests from the database
-        List<HolidayRequest> requests = getHolidayRequests();
+            // Create a panel for the content.
+            JPanel contentPanel = new JPanel();
+            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+            contentPanel.setBackground(Color.decode("#e3eaf5"));
+            contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Set layout manager
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            // Get the list of pending holiday requests.
+            List<HolidayRequest> requests = getHolidayRequests();
 
-        // Set common font properties
-        Font titleFont = new Font("Dialog", Font.BOLD, 24);
-        Font labelFont = new Font("Dialog", Font.PLAIN, 14);
-        Font buttonFont = new Font("Dialog", Font.BOLD, 16);
-        Font reasonFont = new Font("Dialog", Font.PLAIN, 12);
+            Font titleFont = new Font("Dialog", Font.BOLD, 24);
+            Font labelFont = new Font("Dialog", Font.PLAIN, 14);
+            Font buttonFont = new Font("Dialog", Font.BOLD, 16);
+            Font reasonFont = new Font("Dialog", Font.PLAIN, 12);
 
-        // Set background color
-        panel.setBackground(Color.decode("#e3eaf5"));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            if (requests.isEmpty()) {
+                // If there are no requests, show a message.
+                JLabel noRequests = new JLabel("No requests to be approved");
+                noRequests.setFont(titleFont);
+                noRequests.setForeground(Color.decode("#1c2a4d"));
+                contentPanel.add(noRequests);
+            } else {
+                // For each request, create a panel with the details.
+                for (HolidayRequest req : requests) {
+                    // Retrieve the proper employee info from the employees table.
+                    EmployeeInfo employee = getEmployeeInfo(req.getEmployeeId());
+                    if (employee == null) {
+                        employee = new EmployeeInfo("Unknown", "Employee", "N/A");
+                    }
 
-        for (HolidayRequest req : requests) {
-            EmployeeInfo employee = EmployeeInfo.getInstance();
-            
-            req.getEmployeeId();
+                    JPanel requestPanel = new JPanel();
+                    requestPanel.setLayout(new BoxLayout(requestPanel, BoxLayout.Y_AXIS));
+                    requestPanel.setBackground(Color.decode("#e3eaf5"));
+                    requestPanel.setBorder(BorderFactory.createLineBorder(Color.decode("#ecf0f1"), 2, true));
 
-            // Create request panel
-            JPanel requestPanel = new JPanel();
-            requestPanel.setLayout(new BoxLayout(requestPanel, BoxLayout.Y_AXIS));
-            requestPanel.setBackground(Color.decode("#e3eaf5"));
-            requestPanel.setBorder(BorderFactory.createLineBorder(Color.decode("#ecf0f1"), 2, true));
+                    // Label with employee details and week range.
+                    JLabel label = new JLabel("<html><b>" + employee.getfName() + " " + employee.getlName() +
+                            " | Position: " + employee.getRole() +
+                            " | Week: " + req.getStartWeek() +
+                            " - " + req.getEndWeek() + "</b></html>");
+                    label.setFont(titleFont);
+                    label.setForeground(Color.decode("#1c2a4d"));
 
-            // Employee details label
-            JLabel label = new JLabel("<html><b>" + employee.getfName() + " " + employee.getlName() +
-                                     " | Position: " + employee.getRole() + 
-                                     " | Week: " + req.getStartWeek() + 
-                                     " - " + req.getEndWeek() + "</b></html>");
-            label.setFont(titleFont);
-            label.setForeground(Color.decode("#1c2a4d")); // Dark navy for contrast
+                    // Label for the employee's reason.
+                    JLabel reasonLabel = new JLabel("Employee Reason: " + req.getEmployeeReason());
+                    reasonLabel.setFont(labelFont);
+                    reasonLabel.setForeground(Color.decode("#333845"));
 
-            // Employee reason label
-            JLabel reasonLabel = new JLabel("Employee Reason: " + req.getEmployeeReason());
-            reasonLabel.setFont(labelFont);
-            reasonLabel.setForeground(Color.decode("#333845")); // Dark gray for better visibility
+                    // Radio buttons to approve or reject the request.
+                    JRadioButton approveBtn = new JRadioButton("Approve");
+                    JRadioButton rejectBtn = new JRadioButton("Reject");
+                    ButtonGroup group = new ButtonGroup();
+                    group.add(approveBtn);
+                    group.add(rejectBtn);
 
-             // Radio buttons for approval
-            JRadioButton approveBtn = new JRadioButton("Approve");
-            JRadioButton rejectBtn = new JRadioButton("Reject");
-            ButtonGroup group = new ButtonGroup();
-            group.add(approveBtn);
-            group.add(rejectBtn);
+                    Dimension buttonSize = new Dimension(120, 30);
+                    approveBtn.setPreferredSize(buttonSize);
+                    rejectBtn.setPreferredSize(buttonSize);
+                    approveBtn.setMaximumSize(buttonSize);
+                    rejectBtn.setMaximumSize(buttonSize);
+                    approveBtn.setFont(buttonFont);
+                    rejectBtn.setFont(buttonFont);
+                    approveBtn.setForeground(Color.decode("#1c2a4d"));
+                    rejectBtn.setForeground(Color.decode("#1c2a4d"));
+                    approveBtn.setBackground(Color.decode("#16a085"));
+                    rejectBtn.setBackground(Color.decode("#e74c3c"));
 
-            // Set the same preferred size for both buttons
-            Dimension buttonSize = new Dimension(120, 30); // Adjust width and height as needed
-            approveBtn.setPreferredSize(buttonSize);
-            rejectBtn.setPreferredSize(buttonSize);
+                    // Text field for the manager to enter a reason.
+                    JTextField managerReasonField = new JTextField(15);
+                    managerReasonField.setFont(reasonFont);
+                    managerReasonField.setBackground(Color.decode("#ffffff"));
+                    managerReasonField.setForeground(Color.decode("#333845"));
+                    managerReasonField.setBorder(BorderFactory.createLineBorder(Color.decode("#7f8c8d")));
 
-            // Force maximum size to prevent resizing
-            approveBtn.setMaximumSize(buttonSize);
-            rejectBtn.setMaximumSize(buttonSize);
+                    JLabel managerReasonLabel = new JLabel("Manager's Reason:");
+                    managerReasonLabel.setFont(labelFont);
+                    managerReasonLabel.setForeground(Color.decode("#1c2a4d"));
 
-            // Style radio buttons
-            approveBtn.setFont(buttonFont);
-            rejectBtn.setFont(buttonFont);
-            approveBtn.setForeground(Color.decode("#1c2a4d"));
-            rejectBtn.setForeground(Color.decode("#1c2a4d"));
-            approveBtn.setBackground(Color.decode("#16a085"));
-            rejectBtn.setBackground(Color.decode("#e74c3c"));
+                    // Add components to the request panel.
+                    requestPanel.add(label);               // Component index 0
+                    requestPanel.add(reasonLabel);         // Component index 1
+                    requestPanel.add(approveBtn);          // Component index 2
+                    requestPanel.add(rejectBtn);           // Component index 3
+                    requestPanel.add(managerReasonLabel);  // Component index 4
+                    requestPanel.add(managerReasonField);  // Component index 5
 
-            // Manager reason text field
-            JTextField managerReasonField = new JTextField(15);
-            managerReasonField.setFont(reasonFont);
-            managerReasonField.setBackground(Color.decode("#ffffff")); // White background for clarity
-            managerReasonField.setForeground(Color.decode("#333845")); // Dark gray text
-            managerReasonField.setBorder(BorderFactory.createLineBorder(Color.decode("#7f8c8d")));
+                    // Separator to visually separate requests.
+                    JSeparator separator = new JSeparator();
+                    separator.setPreferredSize(new Dimension(panel.getWidth(), 5));
+                    separator.setBackground(Color.decode("#95a5a6"));
+                    separator.setForeground(Color.decode("#95a5a6"));
+                    requestPanel.add(separator);           // Component index 6
 
-            // Manager reason label
-            JLabel managerReasonLabel = new JLabel("Manager's Reason:");
-            managerReasonLabel.setFont(labelFont);
-            managerReasonLabel.setForeground(Color.decode("#1c2a4d")); // Dark navy for visibility
+                    contentPanel.add(requestPanel);
+                }
 
-            // Add components to request panel
-            requestPanel.add(label);
-            requestPanel.add(reasonLabel);
-            requestPanel.add(approveBtn);
-            requestPanel.add(rejectBtn);
-            requestPanel.add(managerReasonLabel);
-            requestPanel.add(managerReasonField);
+                // Create the Confirm button only if there is at least one request.
+                JButton confirmBtn = new JButton("Confirm");
+                confirmBtn.setFont(buttonFont);
+                confirmBtn.setBackground(Color.decode("#16a085"));
+                confirmBtn.setForeground(Color.decode("#ffffff"));
+                confirmBtn.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                confirmBtn.addActionListener(e -> {
+                    // Update only those requests where a decision has been made.
+                    updateDatabase(panel, requests);
+                    // Show confirmation message.
+                    JOptionPane.showMessageDialog(this, "Requests updated successfully.");
+                    // Refresh the request forms so that approved/rejected requests disappear.
+                    generateRequestForms(panel);
+                });
+                JPanel buttonPanel = new JPanel();
+                buttonPanel.setBackground(Color.decode("#34495e"));
+                buttonPanel.add(confirmBtn);
+                contentPanel.add(buttonPanel);
+            }
 
-            // Separator
-            JSeparator separator = new JSeparator();
-            separator.setPreferredSize(new Dimension(panel.getWidth(), 5));
-            separator.setBackground(Color.decode("#95a5a6"));
-            separator.setForeground(Color.decode("#95a5a6"));
-            requestPanel.add(separator);
+            // Wrap the content panel in a scroll pane.
+            JScrollPane scrollPane = new JScrollPane(contentPanel);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setPreferredSize(new Dimension(600, 400));
 
-            panel.add(requestPanel);
+            panel.add(scrollPane, BorderLayout.CENTER);
+            panel.revalidate();
+            panel.repaint();
         }
 
-        // Confirm button
-        JButton confirmBtn = new JButton("Confirm");
-        confirmBtn.setFont(buttonFont);
-        confirmBtn.setBackground(Color.decode("#16a085"));
-        confirmBtn.setForeground(Color.decode("#ffffff")); // White text for readability
-        confirmBtn.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        confirmBtn.addActionListener(e -> updateDatabase(panel, requests));
 
-        // Button panel
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(Color.decode("#34495e"));
-        buttonPanel.add(confirmBtn);
-        panel.add(buttonPanel);
-
-        // Refresh panel
-        panel.revalidate();
-        panel.repaint();
-    }
-    
-    public void updateHolidayStatus(int holidayId, String status, String employeeReason, String managerReason) {
-        try (Connection conn = DatabaseManager.getConnection()) { // Use DbManager
-            String sql = "UPDATE holiday_requests SET approval_status = ?, employee_reason = ?, manager_reason = ? WHERE holiday_id = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            // Set the parameters
-            stmt.setString(1, status);  // Status (Approved or Rejected)
-            stmt.setString(2, employeeReason);  // Employee's reason
-            stmt.setString(3, managerReason);  // Manager's reason
-            stmt.setInt(4, holidayId);  // Holiday ID
-
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error updating holiday status and reasons: " + e.getMessage());
+         // Updates the holiday request in the database.
+        public void updateHolidayStatus(int holidayId, String status, String employeeReason, String managerReason) {
+            try (Connection conn = DatabaseManager.getConnection()) {
+                String sql = "UPDATE holiday_requests SET approval_status = ?, employee_reason = ?, manager_reason = ? WHERE holiday_id = ?";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, status);
+                stmt.setString(2, employeeReason);
+                stmt.setString(3, managerReason);
+                stmt.setInt(4, holidayId);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Error updating holiday status and reasons: " + e.getMessage());
+            }
         }
-    }
     
     public void updateDatabase(JPanel panel, List<HolidayRequest> requests) {
-        Component[] components = panel.getComponents();
-        int index = 0;
+        // Get the components of the JScrollPane
+        for (Component comp : panel.getComponents()) {
+            if (comp instanceof JScrollPane) {
+                JScrollPane scrollPane = (JScrollPane) comp;
+                // Get the panel inside the scroll pane (the viewport)
+                JPanel contentPanel = (JPanel) scrollPane.getViewport().getView();
 
-        for (Component comp : components) {
-            if (comp instanceof JPanel) {
-                JPanel reqPanel = (JPanel) comp;
-                JRadioButton approveBtn = (JRadioButton) reqPanel.getComponent(1);
-                JRadioButton rejectBtn = (JRadioButton) reqPanel.getComponent(2);
-                JTextField employeeReasonField = (JTextField) reqPanel.getComponent(4);
-                JTextField managerReasonField = (JTextField) reqPanel.getComponent(6);
+                // Now, loop through the request panels inside contentPanel
+                Component[] requestPanels = contentPanel.getComponents();
+                int index = 0;
 
-                String status = approveBtn.isSelected() ? "Approved" : "Rejected";
-                String employeeReason = employeeReasonField.getText();
-                String managerReason = managerReasonField.getText();
-                int holidayId = requests.get(index).getHolidayId();
+                for (Component reqComp : requestPanels) {
+                    if (reqComp instanceof JPanel) {
+                        JPanel reqPanel = (JPanel) reqComp;
 
-                updateHolidayStatus(holidayId, status, employeeReason, managerReason);
-                index++;
+                        // Debug: print number of components in requestPanel
+                        System.out.println("Number of components in requestPanel: " + reqPanel.getComponentCount());
+
+                        // Ensure the panel has the expected components.
+                        if (reqPanel.getComponentCount() >= 7) {
+                            // Retrieve components using their indices:
+                            JRadioButton approveBtn = (JRadioButton) reqPanel.getComponent(2);  // Approve button
+                            JRadioButton rejectBtn = (JRadioButton) reqPanel.getComponent(3);   // Reject button
+                            JTextField managerReasonField = (JTextField) reqPanel.getComponent(5);  // Manager reason field
+                            JLabel employeeReasonLabel = (JLabel) reqPanel.getComponent(1);     // Employee reason label
+
+                            // Get the actual employee reason (remove the label prefix)
+                            String employeeReason = employeeReasonLabel.getText().replace("Employee Reason: ", "").trim();
+                            String managerReason = managerReasonField.getText().trim();
+                            int holidayId = requests.get(index).getHolidayId();
+
+                            // Determine the decision state. Default is "Pending".
+                            String decision = "Pending";
+                            if (approveBtn.isSelected()) {
+                                decision = "Approved";
+                            } else if (rejectBtn.isSelected()) {
+                                decision = "Rejected";
+                            }
+
+                            // Only update if a decision was made.
+                            if (!decision.equals("Pending")) {
+                                updateHolidayStatus(holidayId, decision, employeeReason, managerReason);
+                            }
+                        } else {
+                            System.out.println("Skipping request panel with insufficient components.");
+                        }
+                        index++;
+                    }
+                }
             }
         }
     }
+
+
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -231,10 +298,11 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
         backToMainBTN = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setExtendedState(MAXIMIZED_BOTH);
-        setMinimumSize(new java.awt.Dimension(1920, 1080));
-        setSize(new java.awt.Dimension(1520, 715));
+        setMinimumSize(new java.awt.Dimension(1920, 800));
+        setPreferredSize(new java.awt.Dimension(1410, 741));
+        setSize(new java.awt.Dimension(0, 0));
 
         jPanel2.setBackground(new java.awt.Color(12, 48, 128));
 
@@ -251,7 +319,7 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(titleLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 630, Short.MAX_VALUE)
                 .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(154, 154, 154))
         );
@@ -273,7 +341,7 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 348, Short.MAX_VALUE)
+            .addGap(0, 527, Short.MAX_VALUE)
         );
 
         backToMainBTN.setBackground(new java.awt.Color(12, 48, 128));
@@ -292,24 +360,27 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addComponent(backToMainBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(backToMainBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backToMainBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToMainBTNActionPerformed
