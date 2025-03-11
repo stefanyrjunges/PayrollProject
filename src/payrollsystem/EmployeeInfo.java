@@ -25,6 +25,13 @@ public class EmployeeInfo {
         this.salary = salary;
     }
     
+    public EmployeeInfo(String fName, String lName, String role) {
+        this.fName = fName;
+        this.lName = lName;
+        this.role = role;
+    }
+
+    
     public void setName(String fName, String lName) {
         this.fName = fName;
         this.lName = lName;

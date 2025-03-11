@@ -250,6 +250,9 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
     private void holidayBTN1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_holidayBTN1ActionPerformed
         // TODO add your handling code here:
+        HolidayRequestGUI holidayRequest = new HolidayRequestGUI();
+        holidayRequest.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_holidayBTN1ActionPerformed
 
     /**
