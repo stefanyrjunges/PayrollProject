@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -71,7 +72,7 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
                 employee = EmployeeInfo.getInstance();
                 employee.setfName(rs.getString("fname"));
                 employee.setlName(rs.getString("lname"));
-                employee.setRole(rs.getString("role"));
+                employee.setRole(rs.getString("position"));
             }
         } catch (SQLException e) {
             System.out.println("Error retrieving employee info: " + e.getMessage());
@@ -102,6 +103,7 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
                 JLabel noRequests = new JLabel("No requests to be approved");
                 noRequests.setFont(titleFont);
                 noRequests.setForeground(Color.decode("#1c2a4d"));
+                noRequests.setAlignmentX(Component.CENTER_ALIGNMENT);
                 contentPanel.add(noRequests);
             } else {
                 // For each request, create a panel with the details.
@@ -124,6 +126,11 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
                             " - " + req.getEndWeek() + "</b></html>");
                     label.setFont(titleFont);
                     label.setForeground(Color.decode("#1c2a4d"));
+                    
+                    // Restrict panel width and height
+                    requestPanel.setMaximumSize(new Dimension(500, 180));
+                    requestPanel.setPreferredSize(new Dimension(500, 180));
+                    requestPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
                     // Label for the employee's reason.
                     JLabel reasonLabel = new JLabel("Employee Reason: " + req.getEmployeeReason());
@@ -176,6 +183,7 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
                     requestPanel.add(separator);           // Component index 6
 
                     contentPanel.add(requestPanel);
+                    contentPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add spacing between panels
                 }
 
                 // Create the Confirm button only if there is at least one request.
@@ -194,14 +202,17 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
                 });
                 JPanel buttonPanel = new JPanel();
                 buttonPanel.setBackground(Color.decode("#34495e"));
+                buttonPanel.setMaximumSize(new Dimension(500, 50)); // Restrict button panel height
+                buttonPanel.setPreferredSize(new Dimension(500, 50));
+                buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
                 buttonPanel.add(confirmBtn);
                 contentPanel.add(buttonPanel);
             }
 
             // Wrap the content panel in a scroll pane.
             JScrollPane scrollPane = new JScrollPane(contentPanel);
-            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            scrollPane.setPreferredSize(new Dimension(600, 400));
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setPreferredSize(new Dimension(550, 400));
 
             panel.add(scrollPane, BorderLayout.CENTER);
             panel.revalidate();
