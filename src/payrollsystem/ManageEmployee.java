@@ -6,6 +6,7 @@ package payrollsystem;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.security.SecureRandom;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.sql.DriverManager;
@@ -13,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.*;
-
 
 /**
  *
@@ -24,6 +24,8 @@ public class ManageEmployee extends javax.swing.JFrame {
    private DefaultTableModel tableModel;
    private Connection connection;
    private EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
+   private final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+   private final SecureRandom random = new SecureRandom();
 
     /**
      * Creates new form EmployeeSection
@@ -504,8 +506,34 @@ public class ManageEmployee extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public String generatePassword(int length) {
+            StringBuilder password = new StringBuilder();
+            for (int i = 0; i < length; i++) {
+                int index = random.nextInt(CHARACTERS.length());
+                password.append(CHARACTERS.charAt(index));
+            }
+            return password.toString();
+    }
+    
+    public void createLogIn(int empId, String fname, String lname) {
+        String sql = "INSERT INTO employee_logins (employee_id, username, password_hash) VALUES (?, ?, ?)";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, empId);
+            st.setString(2, (fname + "." + lname).toLowerCase());
+            st.setString(3, generatePassword(8)); // Generates an 8-character password
+
+            int rowsInserted = st.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Employee login added successfully!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error inserting employee login!");
+        }
+    }
+    
     private void addBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTNActionPerformed
-      String employee_id = empIdTF.getText();
+    String employee_id = empIdTF.getText();
     String fname = fnameTF.getText();
     String lname = lnameTF.getText();
     String position = positionTF.getText();
@@ -561,6 +589,8 @@ public class ManageEmployee extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Error adding employee to database! Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
+    
+    createLogIn(Integer.parseInt(employee_id), fname, lname);
 
     }//GEN-LAST:event_addBTNActionPerformed
 
@@ -638,42 +668,66 @@ public class ManageEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_editBTNActionPerformed
 
     private void deleteBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBTNActionPerformed
-             int selectedRow = employeeTable.getSelectedRow();
+    int selectedRow = employeeTable.getSelectedRow();
 
     if (selectedRow != -1) {
-        // Get the employee ID of the selected row
-        String employee_id = tableModel.getValueAt(selectedRow, 0).toString();
+    // Get the employee ID of the selected row
+    String employee_id = tableModel.getValueAt(selectedRow, 0).toString();
 
-        // Ask for confirmation before deleting
-        int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this employee?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-        if (confirmation == JOptionPane.YES_OPTION) {
-            // Remove the selected row from the table model
-            tableModel.removeRow(selectedRow);
+    // Ask for confirmation before deleting
+    int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this employee?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+    if (confirmation == JOptionPane.YES_OPTION) {
+        // Remove the selected row from the table model
+        tableModel.removeRow(selectedRow);
 
-            // Delete the employee from the database
+        // Delete the employee and their login from the database
+        try {
+            // Start a transaction
+            connection.setAutoCommit(false);
+
+            // Delete the login information from employee_logins table
+            String deleteLoginSql = "DELETE FROM employee_logins WHERE employee_id = ?";
+            PreparedStatement deleteLoginStatement = connection.prepareStatement(deleteLoginSql);
+            deleteLoginStatement.setInt(1, Integer.parseInt(employee_id));
+
+            int loginRowsDeleted = deleteLoginStatement.executeUpdate();
+
+            // Delete the employee from the employees table
+            String deleteEmployeeSql = "DELETE FROM employees WHERE employee_id = ?";
+            PreparedStatement deleteEmployeeStatement = connection.prepareStatement(deleteEmployeeSql);
+            deleteEmployeeStatement.setInt(1, Integer.parseInt(employee_id));
+
+            int employeeRowsDeleted = deleteEmployeeStatement.executeUpdate();
+
+            // If both deletions are successful, commit the transaction
+            if (loginRowsDeleted > 0 && employeeRowsDeleted > 0) {
+                connection.commit();
+                JOptionPane.showMessageDialog(this, "Employee and login deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                connection.rollback();
+                JOptionPane.showMessageDialog(this, "Error: Employee or login ID not found in the database.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
             try {
-                String sql = "DELETE FROM employees WHERE employee_id = ?";
-                PreparedStatement statement = connection.prepareStatement(sql);
-
-                // Set the employee ID in the query
-                statement.setInt(1, Integer.parseInt(employee_id));
-
-                // Execute the delete query
-                int rowsDeleted = statement.executeUpdate();
-                if (rowsDeleted > 0) {
-                    JOptionPane.showMessageDialog(this, "Employee deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Error: Employee ID not found in the database.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-
+                // Rollback the transaction in case of an error
+                connection.rollback();
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(this, "Error deleting employee and login from database: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } finally {
+            // Restore the auto-commit mode
+            try {
+                connection.setAutoCommit(true);
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Error deleting employee from database: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Please select a row to delete.");
     }
+} else {
+    JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+}
 
     }//GEN-LAST:event_deleteBTNActionPerformed
 

@@ -24,6 +24,34 @@ public class HoursSubmissionData {
         this.isPending = isPending;
     }
 
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public void setWeekNumber(int weekNumber) {
+        this.weekNumber = weekNumber;
+    }
+
+    public void setTotalHours(double totalHours) {
+        this.totalHours = totalHours;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public void setWorkedDays(String workedDays) {
+        this.workedDays = workedDays;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public void setIsPending(boolean isPending) {
+        this.isPending = isPending;
+    }
+    
     public int getEmployeeId() { 
         return employeeId;
     }
