@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
 package payrollsystem;
 
 public class SubmissionApprovalGUI extends javax.swing.JFrame {
@@ -346,7 +347,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
             rejectBTN.setVisible(false);
         }
     }
-
+    
     public void approveHours() {
         if (!empIdTF.getText().isEmpty()) {
             int employeeId = Integer.parseInt(empIdTF.getText());

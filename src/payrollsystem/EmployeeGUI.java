@@ -4,19 +4,17 @@
  */
 package payrollsystem;
 
-/**
- *
- * @author paneq
- */
 public class EmployeeGUI extends javax.swing.JFrame {
 
-    private EmployeeDataFetcher dataFetcher = new EmployeeDataFetcher();
-    private EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
+    private final EmployeeDataFetcher dataFetcher = new EmployeeDataFetcher();
+    private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
+    private final EmployeeNotification employeeNotif = new EmployeeNotification();
     
     public EmployeeGUI() {
         initComponents();
         dataFetcher.loadUserInformation("employee_id", "employee_logins", "employees");
-        subtitleLBL.setText("Hello, " + employeeInfo.getName());
+        empNameLBL.setText(employeeInfo.getName() + "!");
+        employeeNotif.notifyEmployee(employeeInfo.getId());
     }
 
     /**
@@ -30,15 +28,18 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         titleLBL = new javax.swing.JLabel();
-        subtitleLBL = new javax.swing.JLabel();
         iconLBL = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        hoursBTN = new javax.swing.JButton();
-        salaryBTN = new javax.swing.JButton();
-        statementBTN = new javax.swing.JButton();
         logoutBTN = new javax.swing.JButton();
-        empProfileBTN = new javax.swing.JButton();
+        menuPNL = new javax.swing.JPanel();
+        subtitleLBL = new javax.swing.JLabel();
+        empNameLBL = new javax.swing.JLabel();
+        questionLBL = new javax.swing.JLabel();
+        hoursBTN = new javax.swing.JButton();
         holidayBTN1 = new javax.swing.JButton();
+        statementBTN = new javax.swing.JButton();
+        salaryBTN = new javax.swing.JButton();
+        empProfileBTN = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -52,11 +53,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         titleLBL.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         titleLBL.setForeground(new java.awt.Color(255, 255, 255));
-        titleLBL.setText("EMPLOYEE DASHBOARD");
-
-        subtitleLBL.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        subtitleLBL.setForeground(new java.awt.Color(255, 255, 255));
-        subtitleLBL.setText("Hello,");
+        titleLBL.setText("DASHBOARD");
 
         iconLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/PAYROLL_LOGO_E.png"))); // NOI18N
 
@@ -65,28 +62,50 @@ public class EmployeeGUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLBL)
-                    .addComponent(subtitleLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(653, Short.MAX_VALUE)
+                .addComponent(titleLBL)
+                .addGap(491, 491, 491)
                 .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(473, 473, 473))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(titleLBL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(subtitleLBL)))
+                        .addGap(85, 85, 85)
+                        .addComponent(titleLBL))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        logoutBTN.setBackground(new java.awt.Color(237, 170, 12));
+        logoutBTN.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        logoutBTN.setForeground(new java.awt.Color(255, 255, 255));
+        logoutBTN.setText("LOG OUT");
+        logoutBTN.setBorderPainted(false);
+        logoutBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBTNActionPerformed(evt);
+            }
+        });
+
+        menuPNL.setBackground(new java.awt.Color(248, 248, 248));
+
+        subtitleLBL.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        subtitleLBL.setForeground(new java.awt.Color(80, 80, 80));
+        subtitleLBL.setText("Welcome back,");
+
+        empNameLBL.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        empNameLBL.setForeground(new java.awt.Color(80, 80, 80));
+        empNameLBL.setText("Employee");
+
+        questionLBL.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        questionLBL.setText("How can we help you today?");
 
         hoursBTN.setBackground(new java.awt.Color(237, 170, 12));
         hoursBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -97,6 +116,29 @@ public class EmployeeGUI extends javax.swing.JFrame {
         hoursBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hoursBTNActionPerformed(evt);
+            }
+        });
+
+        holidayBTN1.setBackground(new java.awt.Color(237, 170, 12));
+        holidayBTN1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        holidayBTN1.setForeground(new java.awt.Color(255, 255, 255));
+        holidayBTN1.setText("holiday request");
+        holidayBTN1.setBorderPainted(false);
+        holidayBTN1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                holidayBTN1ActionPerformed(evt);
+            }
+        });
+
+        statementBTN.setBackground(new java.awt.Color(237, 170, 12));
+        statementBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        statementBTN.setForeground(new java.awt.Color(255, 255, 255));
+        statementBTN.setText("generate statement");
+        statementBTN.setBorder(null);
+        statementBTN.setBorderPainted(false);
+        statementBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statementBTNActionPerformed(evt);
             }
         });
 
@@ -112,33 +154,10 @@ public class EmployeeGUI extends javax.swing.JFrame {
             }
         });
 
-        statementBTN.setBackground(new java.awt.Color(237, 170, 12));
-        statementBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        statementBTN.setForeground(new java.awt.Color(255, 255, 255));
-        statementBTN.setText("statement");
-        statementBTN.setBorder(null);
-        statementBTN.setBorderPainted(false);
-        statementBTN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statementBTNActionPerformed(evt);
-            }
-        });
-
-        logoutBTN.setBackground(new java.awt.Color(237, 170, 12));
-        logoutBTN.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        logoutBTN.setForeground(new java.awt.Color(255, 255, 255));
-        logoutBTN.setText("LOG OUT");
-        logoutBTN.setBorderPainted(false);
-        logoutBTN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutBTNActionPerformed(evt);
-            }
-        });
-
         empProfileBTN.setBackground(new java.awt.Color(237, 170, 12));
         empProfileBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         empProfileBTN.setForeground(new java.awt.Color(255, 255, 255));
-        empProfileBTN.setText("employee information");
+        empProfileBTN.setText("see profile");
         empProfileBTN.setBorderPainted(false);
         empProfileBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,16 +165,51 @@ public class EmployeeGUI extends javax.swing.JFrame {
             }
         });
 
-        holidayBTN1.setBackground(new java.awt.Color(237, 170, 12));
-        holidayBTN1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        holidayBTN1.setForeground(new java.awt.Color(255, 255, 255));
-        holidayBTN1.setText("holiday request");
-        holidayBTN1.setBorderPainted(false);
-        holidayBTN1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                holidayBTN1ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout menuPNLLayout = new javax.swing.GroupLayout(menuPNL);
+        menuPNL.setLayout(menuPNLLayout);
+        menuPNLLayout.setHorizontalGroup(
+            menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPNLLayout.createSequentialGroup()
+                .addGroup(menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuPNLLayout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(questionLBL))
+                    .addGroup(menuPNLLayout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addGroup(menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(empProfileBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hoursBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(holidayBTN1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(statementBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(salaryBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(menuPNLLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(subtitleLBL)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(empNameLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+        menuPNLLayout.setVerticalGroup(
+            menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPNLLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(empNameLBL)
+                    .addComponent(subtitleLBL))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(questionLBL)
+                .addGap(52, 52, 52)
+                .addComponent(hoursBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(holidayBTN1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(statementBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(salaryBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(empProfileBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(106, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -164,37 +218,20 @@ public class EmployeeGUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(hoursBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(170, 170, 170)
-                        .addComponent(statementBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(156, 156, 156)
-                        .addComponent(salaryBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(449, 449, 449)
+                        .addComponent(menuPNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(669, 669, 669)
-                        .addComponent(logoutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(353, 353, 353)
-                        .addComponent(holidayBTN1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(198, 198, 198)
-                        .addComponent(empProfileBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(711, 711, 711)
+                        .addComponent(logoutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(statementBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hoursBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(salaryBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(127, 127, 127)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(empProfileBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(holidayBTN1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(144, 144, 144)
+                .addComponent(menuPNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(logoutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addContainerGap(304, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -214,7 +251,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void statementBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statementBTNActionPerformed
         // TODO add your handling code here:
         EmployeeStatementGUI statementGui = new EmployeeStatementGUI();
@@ -291,6 +328,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel empNameLBL;
     private javax.swing.JButton empProfileBTN;
     private javax.swing.JButton holidayBTN1;
     private javax.swing.JButton hoursBTN;
@@ -298,6 +336,8 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton logoutBTN;
+    private javax.swing.JPanel menuPNL;
+    private javax.swing.JLabel questionLBL;
     private javax.swing.JButton salaryBTN;
     private javax.swing.JButton statementBTN;
     private javax.swing.JLabel subtitleLBL;

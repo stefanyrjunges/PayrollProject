@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class SubmissionManager {
-    
+
     public HoursSubmissionData loadStatus() {
         String query = "SELECT wf.employee_id, CONCAT(e.fname, ' ', e.lname) AS fullName, " +
         "wf.weekNumber, wf.total_hours, wf.salary, " +
@@ -95,6 +95,5 @@ public class SubmissionManager {
             JOptionPane.showMessageDialog(null, "Error rejecting employee hours: " + e);
         }
         
-    }    
-    
+    }   
 }
