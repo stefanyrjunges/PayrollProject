@@ -4,6 +4,8 @@
  */
 package payrollsystem;
 
+import java.awt.FontMetrics;
+
 /**
  *
  * @author tenhe
@@ -16,7 +18,8 @@ public class ManagerDashboard extends javax.swing.JFrame {
     public ManagerDashboard() {
         initComponents();
         dataFetcher.loadUserInformation("manager_id", "manager_logins", "managers");
-        subtitleLBL.setText("Hello, " + employeeInfo.getName());
+        mngNameLBL.setText(employeeInfo.getName() + "!");
+        formatWelcome();
     }
 
     /**
@@ -29,14 +32,17 @@ public class ManagerDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        titleLBL = new javax.swing.JLabel();
         iconLBL = new javax.swing.JLabel();
-        subtitleLBL = new javax.swing.JLabel();
+        titleLBL = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        reviewBTN = new javax.swing.JButton();
+        menuPNL = new javax.swing.JPanel();
         reportBTN = new javax.swing.JButton();
+        subtitleLBL = new javax.swing.JLabel();
+        mngNameLBL = new javax.swing.JLabel();
+        questionLBL = new javax.swing.JLabel();
+        reviewBTN = new javax.swing.JButton();
         manageBTN = new javax.swing.JButton();
-        holidaysManagmentBTN = new javax.swing.JButton();
+        holidayBTN = new javax.swing.JButton();
         logOutBTN = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -45,60 +51,67 @@ public class ManagerDashboard extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(12, 48, 128));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
-        titleLBL.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        titleLBL.setForeground(new java.awt.Color(255, 255, 255));
-        titleLBL.setText("MANAGER DASHBOARD");
-
         iconLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/PAYROLL_LOGO_m.png"))); // NOI18N
 
-        subtitleLBL.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        subtitleLBL.setForeground(new java.awt.Color(255, 255, 255));
-        subtitleLBL.setText("Hello,");
+        titleLBL.setBackground(new java.awt.Color(248, 248, 248));
+        titleLBL.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        titleLBL.setForeground(new java.awt.Color(248, 248, 248));
+        titleLBL.setText("DASHBOARD");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(subtitleLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(titleLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(575, 575, 575)
                 .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(51, 51, 51))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(iconLBL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addComponent(iconLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
                 .addComponent(titleLBL)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(subtitleLBL)
-                .addContainerGap())
+                .addGap(61, 61, 61))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setMinimumSize(new java.awt.Dimension(1920, 1080));
 
-        reviewBTN.setBackground(new java.awt.Color(33, 118, 206));
-        reviewBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        reviewBTN.setForeground(new java.awt.Color(255, 255, 255));
-        reviewBTN.setText("manage clock in/clock out");
-        reviewBTN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reviewBTNActionPerformed(evt);
-            }
-        });
+        menuPNL.setBackground(new java.awt.Color(248, 248, 248));
 
         reportBTN.setBackground(new java.awt.Color(33, 118, 206));
         reportBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         reportBTN.setForeground(new java.awt.Color(255, 255, 255));
-        reportBTN.setText("financial report");
+        reportBTN.setText("generate financial report");
         reportBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reportBTNActionPerformed(evt);
+            }
+        });
+
+        subtitleLBL.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        subtitleLBL.setForeground(new java.awt.Color(80, 80, 80));
+        subtitleLBL.setText("Welcome back,");
+
+        mngNameLBL.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        mngNameLBL.setForeground(new java.awt.Color(80, 80, 80));
+        mngNameLBL.setText("Manager");
+
+        questionLBL.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        questionLBL.setText("How can we help you today?");
+
+        reviewBTN.setBackground(new java.awt.Color(33, 118, 206));
+        reviewBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        reviewBTN.setForeground(new java.awt.Color(255, 255, 255));
+        reviewBTN.setText("review hours submission");
+        reviewBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reviewBTNActionPerformed(evt);
             }
         });
 
@@ -112,16 +125,59 @@ public class ManagerDashboard extends javax.swing.JFrame {
             }
         });
 
-        holidaysManagmentBTN.setBackground(new java.awt.Color(33, 118, 206));
-        holidaysManagmentBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        holidaysManagmentBTN.setForeground(new java.awt.Color(255, 255, 255));
-        holidaysManagmentBTN.setText("holidays management");
-        holidaysManagmentBTN.setPreferredSize(new java.awt.Dimension(127, 26));
-        holidaysManagmentBTN.addActionListener(new java.awt.event.ActionListener() {
+        holidayBTN.setBackground(new java.awt.Color(33, 118, 206));
+        holidayBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        holidayBTN.setForeground(new java.awt.Color(255, 255, 255));
+        holidayBTN.setText("manage holidays");
+        holidayBTN.setPreferredSize(new java.awt.Dimension(127, 26));
+        holidayBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                holidaysManagmentBTNActionPerformed(evt);
+                holidayBTNActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout menuPNLLayout = new javax.swing.GroupLayout(menuPNL);
+        menuPNL.setLayout(menuPNLLayout);
+        menuPNLLayout.setHorizontalGroup(
+            menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPNLLayout.createSequentialGroup()
+                .addGroup(menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuPNLLayout.createSequentialGroup()
+                        .addGap(158, 158, 158)
+                        .addComponent(subtitleLBL)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mngNameLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuPNLLayout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(questionLBL))
+                    .addGroup(menuPNLLayout.createSequentialGroup()
+                        .addGap(184, 184, 184)
+                        .addGroup(menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(reviewBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(manageBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(holidayBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(reportBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+        menuPNLLayout.setVerticalGroup(
+            menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPNLLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(menuPNLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mngNameLBL)
+                    .addComponent(subtitleLBL))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(questionLBL)
+                .addGap(55, 55, 55)
+                .addComponent(manageBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(reviewBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(holidayBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(reportBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(111, Short.MAX_VALUE))
+        );
 
         logOutBTN.setBackground(new java.awt.Color(33, 118, 206));
         logOutBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -140,32 +196,19 @@ public class ManagerDashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(269, 269, 269)
-                        .addComponent(manageBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(137, 137, 137)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(reportBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(holidaysManagmentBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(149, 149, 149)
-                                .addComponent(reviewBTN))))
+                        .addGap(441, 441, 441)
+                        .addComponent(menuPNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(652, 652, 652)
-                        .addComponent(logOutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(703, 703, 703)
+                        .addComponent(logOutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(holidaysManagmentBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(manageBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reviewBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(114, 114, 114)
-                .addComponent(reportBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(230, 230, 230)
-                .addComponent(logOutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(menuPNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(logOutBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -174,7 +217,9 @@ public class ManagerDashboard extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1430, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,17 +233,33 @@ public class ManagerDashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formatWelcome(){
+        FontMetrics metrics = mngNameLBL.getFontMetrics(mngNameLBL.getFont());
+        int nameWidth = metrics.stringWidth(mngNameLBL.getText());
+
+        // Get panel width (or parent container width)
+        int panelWidth = menuPNL.getWidth();
+
+        // Calculate new positions
+        int welcomeX = (panelWidth - (nameWidth + subtitleLBL.getWidth() + 10)) / 2; // Adjust spacing
+        int nameX = welcomeX + subtitleLBL.getWidth() + 5; // Small gap between labels
+
+        // Apply new positions
+        subtitleLBL.setLocation(welcomeX, subtitleLBL.getY());
+        subtitleLBL.setLocation(nameX, subtitleLBL.getY());
+    }
+    
     private void reviewBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reviewBTNActionPerformed
         SubmissionApprovalGUI submissionApproval = new SubmissionApprovalGUI();
         submissionApproval.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_reviewBTNActionPerformed
 
-    private void holidaysManagmentBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_holidaysManagmentBTNActionPerformed
+    private void holidayBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_holidayBTNActionPerformed
         HolidayApprovalGUI holidayApproval = new HolidayApprovalGUI();
         holidayApproval.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_holidaysManagmentBTNActionPerformed
+    }//GEN-LAST:event_holidayBTNActionPerformed
 
     private void manageBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBTNActionPerformed
         // TODO add your handling code here:
@@ -256,12 +317,15 @@ public class ManagerDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton holidaysManagmentBTN;
+    private javax.swing.JButton holidayBTN;
     private javax.swing.JLabel iconLBL;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton logOutBTN;
     private javax.swing.JButton manageBTN;
+    private javax.swing.JPanel menuPNL;
+    private javax.swing.JLabel mngNameLBL;
+    private javax.swing.JLabel questionLBL;
     private javax.swing.JButton reportBTN;
     private javax.swing.JButton reviewBTN;
     private javax.swing.JLabel subtitleLBL;
