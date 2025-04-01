@@ -20,7 +20,8 @@ public class DatabaseManager {
             DB_USERNAME = properties.getProperty("db.username");
             DB_PASSWORD = properties.getProperty("db.password");
         } catch (IOException e) {
-            System.out.println("error: " + e);
+            System.out.println("Error: " + e);
+            throw new RuntimeException("Failed to load database properties");
         }
     }
 

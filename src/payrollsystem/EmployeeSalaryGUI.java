@@ -4,23 +4,23 @@
  */
 package payrollsystem;
 
-import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
- * DatabaseManager.java 
- * February 2025
+ * DatabaseManager.java February 2025
+ *
  * @author Murilo Batiuk
  */
+
 public class EmployeeSalaryGUI extends javax.swing.JFrame {
 
     private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
     private final JTable financeTable;
-    private final JComboBox<String> monthComboBox;
     private final SalaryAdmin salaryAdmin;
     private final EmployeeDataFetcher dataFetcher = new EmployeeDataFetcher();
-    private final SalaryAdmin admin = new SalaryAdmin();
+    private final SalaryAdmin Admin = new SalaryAdmin();
 
     /**
      * Creates new form PayrollGUI
@@ -30,26 +30,19 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
 
         dataFetcher.loadUserInformation("employee_id", "employee_logins", "employees");
 
+        subtitleLBL.setText("Hello, " + employeeInfo.getName() + "!");
+
         salaryAdmin = new SalaryAdmin();
 
         // Define JTable columns
-        String[] columnNames = {"Week", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Total Hours"};
+        String[] columnNames = {"Week", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Total Hours", "Total After Taxes"};
         financeTable = new JTable(new DefaultTableModel(columnNames, 0));
 
-        // Month selection dropdown
-        monthComboBox = new JComboBox<>(new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
-
         // Layout
-        JPanel panel = new JPanel();
-        panel.add(new JLabel("Select Month:"));
-        panel.add(monthComboBox);
-        add(panel, "North");
-        add(new JScrollPane(financeTable), "Center");
-
-        setTitle("Employee Salary");
-        setSize(800, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+//        setTitle("Employee Salary");
+//        setSize(800, 400);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setVisible(true);
 
     }
 
@@ -62,330 +55,471 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        maintitleLBL = new javax.swing.JLabel();
+        subtitleLBL = new javax.swing.JLabel();
+        orangelogoLBL = new javax.swing.JLabel();
+        jPanel = new javax.swing.JPanel();
         returnBTN = new javax.swing.JButton();
-        selectmonthCB = new javax.swing.JComboBox<>();
         selectmonthLBL = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         weektableTBL = new javax.swing.JTable();
-        monthtotalLBL = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        monthtotalTA = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
-        maintitleLBL = new javax.swing.JLabel();
-        orangelogoLBL = new javax.swing.JLabel();
+        januaryBTN = new javax.swing.JButton();
+        februaryBTN = new javax.swing.JButton();
+        marchBTN = new javax.swing.JButton();
+        aprilBTN = new javax.swing.JButton();
+        mayBTN = new javax.swing.JButton();
+        juneBTN = new javax.swing.JButton();
+        julyBTN = new javax.swing.JButton();
+        augustBTN = new javax.swing.JButton();
+        septemberBTN = new javax.swing.JButton();
+        octoberBTN = new javax.swing.JButton();
+        novemberBTN = new javax.swing.JButton();
+        decemberBTN = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1920, 1080));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setFocusTraversalPolicyProvider(true);
-        jPanel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jPanel2.setPreferredSize(new java.awt.Dimension(1513, 1513));
+        jPanel1.setBackground(new java.awt.Color(235, 142, 39));
+
+        maintitleLBL.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        maintitleLBL.setText("ESTIMATED SALARY");
+
+        subtitleLBL.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        subtitleLBL.setText("Hello, Employee!");
+
+        orangelogoLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/PAYROLL_LOGO_E.png"))); // NOI18N
+
+        jPanel.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel.setFocusTraversalPolicyProvider(true);
+        jPanel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jPanel.setPreferredSize(new java.awt.Dimension(1513, 1513));
 
         returnBTN.setBackground(new java.awt.Color(235, 142, 39));
-        returnBTN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        returnBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         returnBTN.setForeground(new java.awt.Color(255, 255, 255));
-        returnBTN.setText("RETURN TO DASHBOARD");
+        returnBTN.setText("return");
         returnBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 returnBTNActionPerformed(evt);
             }
         });
 
-        selectmonthCB.setBackground(new java.awt.Color(235, 142, 39));
-        selectmonthCB.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        selectmonthCB.setMaximumRowCount(12);
-        selectmonthCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" }));
-        selectmonthCB.setBorder(null);
-        selectmonthCB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                january(evt);
-                february(evt);
-                march(evt);
-                april(evt);
-                may(evt);
-                june(evt);
-                july(evt);
-                august(evt);
-                september(evt);
-                october(evt);
-                november(evt);
-                december(evt);
-            }
-        });
-
-        selectmonthLBL.setBackground(new java.awt.Color(255, 255, 255));
-        selectmonthLBL.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        selectmonthLBL.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         selectmonthLBL.setText("select month:");
-
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         weektableTBL.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         weektableTBL.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "week", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "week total"
+                "week", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "week total (€)", "Total After Taxes "
             }
         ));
         weektableTBL.setRowHeight(60);
         jScrollPane1.setViewportView(weektableTBL);
 
-        monthtotalLBL.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        monthtotalLBL.setText("Month Total: ");
+        januaryBTN.setBackground(new java.awt.Color(235, 142, 39));
+        januaryBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        januaryBTN.setText("january");
+        januaryBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                januaryBTNActionPerformed(evt);
+            }
+        });
 
-        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        februaryBTN.setBackground(new java.awt.Color(235, 142, 39));
+        februaryBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        februaryBTN.setText("february");
+        februaryBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                februaryBTNActionPerformed(evt);
+            }
+        });
 
-        monthtotalTA.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        monthtotalTA.setAutoscrolls(false);
-        jScrollPane2.setViewportView(monthtotalTA);
+        marchBTN.setBackground(new java.awt.Color(235, 142, 39));
+        marchBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        marchBTN.setText("march");
+        marchBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                marchBTNActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(selectmonthCB, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(selectmonthLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(99, 99, 99)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(monthtotalLBL)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(returnBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 898, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        aprilBTN.setBackground(new java.awt.Color(235, 142, 39));
+        aprilBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        aprilBTN.setText("april");
+        aprilBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aprilBTNActionPerformed(evt);
+            }
+        });
+
+        mayBTN.setBackground(new java.awt.Color(235, 142, 39));
+        mayBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        mayBTN.setText("may");
+        mayBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mayBTNActionPerformed(evt);
+            }
+        });
+
+        juneBTN.setBackground(new java.awt.Color(235, 142, 39));
+        juneBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        juneBTN.setText("june");
+        juneBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                juneBTNActionPerformed(evt);
+            }
+        });
+
+        julyBTN.setBackground(new java.awt.Color(235, 142, 39));
+        julyBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        julyBTN.setText("july");
+        julyBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                julyBTNActionPerformed(evt);
+            }
+        });
+
+        augustBTN.setBackground(new java.awt.Color(235, 142, 39));
+        augustBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        augustBTN.setText("august");
+        augustBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                augustBTNActionPerformed(evt);
+            }
+        });
+
+        septemberBTN.setBackground(new java.awt.Color(235, 142, 39));
+        septemberBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        septemberBTN.setText("september");
+        septemberBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                septemberBTNActionPerformed(evt);
+            }
+        });
+
+        octoberBTN.setBackground(new java.awt.Color(235, 142, 39));
+        octoberBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        octoberBTN.setText("october");
+        octoberBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                octoberBTNActionPerformed(evt);
+            }
+        });
+
+        novemberBTN.setBackground(new java.awt.Color(235, 142, 39));
+        novemberBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        novemberBTN.setText("november");
+        novemberBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                novemberBTNActionPerformed(evt);
+            }
+        });
+
+        decemberBTN.setBackground(new java.awt.Color(235, 142, 39));
+        decemberBTN.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        decemberBTN.setText("december");
+        decemberBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decemberBTNActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
+        jPanel.setLayout(jPanelLayout);
+        jPanelLayout.setHorizontalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(januaryBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(septemberBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(marchBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(julyBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(mayBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(novemberBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(februaryBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(decemberBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(aprilBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(juneBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(augustBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(octoberBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(93, 93, 93)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1034, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(669, 669, 669)
+                        .addComponent(returnBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(selectmonthLBL)))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanelLayout.setVerticalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addComponent(selectmonthLBL)
-                        .addGap(10, 10, 10)
-                        .addComponent(selectmonthCB, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(monthtotalLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(januaryBTN)
+                            .addComponent(februaryBTN))
+                        .addGap(39, 39, 39)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(marchBTN)
+                            .addComponent(aprilBTN))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mayBTN)
+                            .addComponent(juneBTN))
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(julyBTN)
+                            .addComponent(augustBTN))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(septemberBTN)
+                            .addComponent(octoberBTN))))
+                .addGap(28, 28, 28)
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(novemberBTN)
+                    .addComponent(decemberBTN))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                 .addComponent(returnBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
-
-        jPanel1.setBackground(new java.awt.Color(235, 142, 39));
-
-        maintitleLBL.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        maintitleLBL.setForeground(new java.awt.Color(255, 255, 255));
-        maintitleLBL.setText("ESTIMATED SALARY");
-
-        orangelogoLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/PAYROLL_LOGO_E.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(maintitleLBL)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 969, Short.MAX_VALUE)
+                .addGap(62, 62, 62)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(maintitleLBL)
+                    .addComponent(subtitleLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(orangelogoLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(188, 188, 188))
+                .addGap(41, 41, 41))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(maintitleLBL))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(orangelogoLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(maintitleLBL)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(subtitleLBL)
+                        .addGap(52, 52, 52))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(orangelogoLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1662, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void january(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_january
+
+    private void decemberBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decemberBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(12);
+
+    }//GEN-LAST:event_decemberBTNActionPerformed
+
+    private void novemberBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novemberBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(11);
+
+    }//GEN-LAST:event_novemberBTNActionPerformed
+
+    private void octoberBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_octoberBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(10);
+
+    }//GEN-LAST:event_octoberBTNActionPerformed
+
+    private void septemberBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_septemberBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(9);
+
+    }//GEN-LAST:event_septemberBTNActionPerformed
+
+    private void augustBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_augustBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(8);
+
+    }//GEN-LAST:event_augustBTNActionPerformed
+
+    private void julyBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_julyBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(7);
+
+    }//GEN-LAST:event_julyBTNActionPerformed
+
+    private void juneBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_juneBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(6);
+
+    }//GEN-LAST:event_juneBTNActionPerformed
+
+    private void mayBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mayBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(5);
+
+    }//GEN-LAST:event_mayBTNActionPerformed
+
+    private void aprilBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprilBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(4);
+
+    }//GEN-LAST:event_aprilBTNActionPerformed
+
+    private void marchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marchBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(3);
+
+    }//GEN-LAST:event_marchBTNActionPerformed
+
+    private void februaryBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_februaryBTNActionPerformed
+        // TODO add your handling code here:
+
+        loadFinanceData(2);
+
+    }//GEN-LAST:event_februaryBTNActionPerformed
+
+    private void januaryBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_januaryBTNActionPerformed
         // TODO add your handling code here:
 
         loadFinanceData(1);
 
-    }//GEN-LAST:event_january
-
-    private void february(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_february
-        // TODO add your handling code here:
-
-        loadFinanceData(2);
-    }//GEN-LAST:event_february
-
-    private void march(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_march
-        // TODO add your handling code here:
-
-        loadFinanceData(3);
-    }//GEN-LAST:event_march
-
-    private void april(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_april
-        // TODO add your handling code here:
-
-        loadFinanceData(4);
-    }//GEN-LAST:event_april
-
-    private void may(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_may
-        // TODO add your handling code here:
-
-        loadFinanceData(5);
-    }//GEN-LAST:event_may
-
-    private void june(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_june
-        // TODO add your handling code here:
-
-        loadFinanceData(6);
-    }//GEN-LAST:event_june
-
-    private void july(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_july
-        // TODO add your handling code here:
-
-        loadFinanceData(7);
-    }//GEN-LAST:event_july
-
-    private void august(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_august
-        // TODO add your handling code here:
-
-        loadFinanceData(8);
-    }//GEN-LAST:event_august
-
-    private void september(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_september
-        // TODO add your handling code here:
-
-        loadFinanceData(9);
-    }//GEN-LAST:event_september
-
-    private void october(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_october
-        // TODO add your handling code here:
-
-        loadFinanceData(10);
-    }//GEN-LAST:event_october
-
-    private void november(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_november
-        // TODO add your handling code here:
-
-        loadFinanceData(11);
-    }//GEN-LAST:event_november
-
-    private void december(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_december
-        // TODO add your handling code here:
-
-        loadFinanceData(12);
-    }//GEN-LAST:event_december
+    }//GEN-LAST:event_januaryBTNActionPerformed
 
     private void returnBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTNActionPerformed
+        // TODO add your handling code here:
+        
         EmployeeGUI empDashboard = new EmployeeGUI();
         empDashboard.setVisible(true);
         this.dispose();
+        
     }//GEN-LAST:event_returnBTNActionPerformed
 
     private void loadFinanceData(int month) {
-        int employeeId = employeeInfo.getId();  // Get employee ID
-        List<Object[]> financeData = admin.loadEmployeeFinance(employeeId, month);
+        int employeeId = employeeInfo.getId();
+        List<Object[]> financeData = Admin.loadEmployeeFinance(employeeId, month);
 
         DefaultTableModel model = (DefaultTableModel) weektableTBL.getModel();
-        model.setRowCount(0);
+        model.setRowCount(0);  // Clear existing rows
 
         for (Object[] row : financeData) {
             model.addRow(row);
         }
-}
-    
+
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EmployeeSalaryGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EmployeeSalaryGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EmployeeSalaryGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EmployeeSalaryGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EmployeeSalaryGUI().setVisible(true);
-            }
-        });
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(EmployeeSalaryGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(EmployeeSalaryGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(EmployeeSalaryGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(EmployeeSalaryGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new EmployeeSalaryGUI().setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aprilBTN;
+    private javax.swing.JButton augustBTN;
+    private javax.swing.JButton decemberBTN;
+    private javax.swing.JButton februaryBTN;
+    private javax.swing.JPanel jPanel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton januaryBTN;
+    private javax.swing.JButton julyBTN;
+    private javax.swing.JButton juneBTN;
     private javax.swing.JLabel maintitleLBL;
-    private javax.swing.JLabel monthtotalLBL;
-    private javax.swing.JTextArea monthtotalTA;
+    private javax.swing.JButton marchBTN;
+    private javax.swing.JButton mayBTN;
+    private javax.swing.JButton novemberBTN;
+    private javax.swing.JButton octoberBTN;
     private javax.swing.JLabel orangelogoLBL;
     private javax.swing.JButton returnBTN;
-    private javax.swing.JComboBox<String> selectmonthCB;
     private javax.swing.JLabel selectmonthLBL;
+    private javax.swing.JButton septemberBTN;
+    private javax.swing.JLabel subtitleLBL;
     private javax.swing.JTable weektableTBL;
     // End of variables declaration//GEN-END:variables
 }
