@@ -1,21 +1,31 @@
 package payrollsystem;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DatabaseManager {
-    
-    //Variables that will allow the connection to the database
-    private static final String DB_URL = "jdbc:mysql://database-1.cvu4aceii2zn.eu-west-1.rds.amazonaws.com:3306/Payroll";
-    private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "payrollpassword";
+    private static String DB_URL;
+    private static String DB_USERNAME;
+    private static String DB_PASSWORD;
 
-    public DatabaseManager() {  
+    static {
+        try {
+            Properties properties = new Properties();
+            properties.load(new FileInputStream("src/dbconfig.properties"));
+            DB_URL = properties.getProperty("db.url");
+            DB_USERNAME = properties.getProperty("db.username");
+            DB_PASSWORD = properties.getProperty("db.password");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to load database properties");
+        }
     }
-    
+
     public static Connection getConnection() throws SQLException {
-        //Establish connection to the database
         return DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
     }
 }
