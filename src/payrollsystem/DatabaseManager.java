@@ -21,7 +21,6 @@ public class DatabaseManager {
             DB_PASSWORD = properties.getProperty("db.password");
         } catch (IOException e) {
             System.out.println("error: " + e);
-            throw new RuntimeException("Failed to load database properties");
         }
     }
 
