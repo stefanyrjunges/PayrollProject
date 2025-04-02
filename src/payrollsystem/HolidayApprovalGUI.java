@@ -312,7 +312,7 @@ public class HolidayApprovalGUI extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(1920, 800));
-        setPreferredSize(new java.awt.Dimension(1410, 741));
+        setPreferredSize(new java.awt.Dimension(1920, 800));
         setSize(new java.awt.Dimension(0, 0));
 
         jPanel2.setBackground(new java.awt.Color(12, 48, 128));

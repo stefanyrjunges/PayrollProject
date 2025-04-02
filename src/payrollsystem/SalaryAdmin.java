@@ -140,15 +140,12 @@ public class SalaryAdmin {
     }
 
     public double afterTaxes(double weekTotal) {
-
-        // Income tax rate
         if (weekTotal <= 740) {
             weekTotal = weekTotal - (weekTotal * 0.2);
         } else {
             weekTotal = weekTotal - (weekTotal * 0.4);
         }
 
-        // USC
         if (weekTotal <= 231) {
             weekTotal = weekTotal - (weekTotal * 0.05);
         } else if (weekTotal > 231 && weekTotal <= 447) {
@@ -159,7 +156,6 @@ public class SalaryAdmin {
             weekTotal = weekTotal - (weekTotal * 0.08);
         }
 
-        // PSRI
         if (weekTotal > 441) {
             weekTotal = weekTotal - (weekTotal * 0.04);
         }

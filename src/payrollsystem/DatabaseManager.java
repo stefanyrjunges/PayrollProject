@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseManager {
+
     private static String DB_URL;
     private static String DB_USERNAME;
     private static String DB_PASSWORD;

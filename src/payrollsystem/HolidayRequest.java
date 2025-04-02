@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package payrollsystem;
 
 public class HolidayRequest {
+
     private int holidayId;
     private int employeeId;
     private String startWeek;
@@ -13,7 +10,7 @@ public class HolidayRequest {
 
     public HolidayRequest() {
     }
-    
+
     // Constructor including the employee reason
     public HolidayRequest(int holidayId, int employeeId, String startWeek, String endWeek, String employeeReason) {
         this.holidayId = holidayId;
@@ -62,7 +59,5 @@ public class HolidayRequest {
     public void setEmployeeReason(String employeeReason) {
         this.employeeReason = employeeReason;
     }
-    
-    
-    
+
 }

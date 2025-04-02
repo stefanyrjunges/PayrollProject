@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 package payrollsystem;
 
 public class SubmissionApprovalGUI extends javax.swing.JFrame {
@@ -11,7 +10,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
     private EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
     private FinanceDataFetcher financeFetcher = new FinanceDataFetcher();
     private SubmissionManager submissionManager = new SubmissionManager();
-    
+
     public SubmissionApprovalGUI() {
         initComponents();
         update();
@@ -316,7 +315,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
     public void update() {
 
         HoursSubmissionData submissionData = submissionManager.loadStatus();
-        
+
         if (submissionData.isPending()) {
             empNameTF.setText(submissionData.getEmployeeName());
             empIdTF.setText(String.valueOf(submissionData.getEmployeeId()));
@@ -330,7 +329,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
             estSalaryTF.setVisible(true);
             daysWorkedTF.setVisible(true);
             reasonTA.setText(" ");
-            
+
         } else {
             warningLBL.setText("No pending approvals.");
             empNameTF.setVisible(false);
@@ -347,7 +346,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
             rejectBTN.setVisible(false);
         }
     }
-    
+
     public void approveHours() {
         if (!empIdTF.getText().isEmpty()) {
             int employeeId = Integer.parseInt(empIdTF.getText());
@@ -363,7 +362,7 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
             update();
         }
     }
-    
+
     private void rejectBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectBTNActionPerformed
         sendRefreshBTN.setVisible(true);
         reasonTA.setVisible(true);
@@ -395,7 +394,6 @@ public class SubmissionApprovalGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_empNameTFActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
