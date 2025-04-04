@@ -55,7 +55,7 @@ public class StatementGenerator {
 
                 canvas.setStrokeColor(ColorConstants.ORANGE)
                         .moveTo(100, 710)
-                        .lineTo(500, 710) 
+                        .lineTo(500, 710)
                         .stroke();
 
                 document.add(new Paragraph("EMPLOYEE STATEMENT REPORT").setFont(fontBold).setFontSize(20).setMarginBottom(30));
@@ -102,7 +102,7 @@ public class StatementGenerator {
 
             canvas.setStrokeColor(ColorConstants.BLUE)
                     .moveTo(100, 710)
-                    .lineTo(500, 710) 
+                    .lineTo(500, 710)
                     .stroke();
 
             document.add(new Paragraph("FINANCIAL REPORT").setFont(fontBold).setFontSize(20).setMarginBottom(30));

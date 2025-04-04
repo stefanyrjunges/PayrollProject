@@ -20,29 +20,28 @@ import java.sql.*;
  * @author tenhe
  */
 public class ManageEmployee extends javax.swing.JFrame {
-    
-   private DefaultTableModel tableModel;
-   private Connection connection;
-   private EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
-   private final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
-   private final SecureRandom random = new SecureRandom();
+
+    private DefaultTableModel tableModel;
+    private Connection connection;
+    private EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
+    private final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+    private final SecureRandom random = new SecureRandom();
 
     /**
      * Creates new form EmployeeSection
      */
-     public ManageEmployee() {
+    public ManageEmployee() {
         initComponents();
         connectToDatabase();
         addTableClickListener();
-        
+
         // Set table model with the appropriate column names
-         tableModel = new DefaultTableModel(
-        new Object[][] {},
-         new String[] { "ID", "Name", "Surname", "Position", "Rate", "Address", "Phone", "Email", "Hire Date" }
-            );
+        tableModel = new DefaultTableModel(
+                new Object[][]{},
+                new String[]{"ID", "Name", "Surname", "Position", "Rate", "Address", "Phone", "Email", "Hire Date"}
+        );
         employeeTable.setModel(tableModel);
 
-        
         // Fetch employees after the table model is set
         fetchEmployees();
 
@@ -58,72 +57,72 @@ public class ManageEmployee extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Load the MySQL driver
             connection = DriverManager.getConnection(
-                "jdbc:mysql://database-1.cvu4aceii2zn.eu-west-1.rds.amazonaws.com:3306/Payroll", 
-                "root", 
-                "payrollpassword"
+                    "jdbc:mysql://database-1.cvu4aceii2zn.eu-west-1.rds.amazonaws.com:3306/Payroll",
+                    "root",
+                    "payrollpassword"
             );
             System.out.println("Database connected successfully!");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Database connection failed!");
         }
-    }       
+    }
 
     // Add a listener to the employee table rows for clicking
     private void addTableClickListener() {
-    employeeTable.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            int selectedRow = employeeTable.getSelectedRow(); // Get the selected row index
+        employeeTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int selectedRow = employeeTable.getSelectedRow(); // Get the selected row index
 
-            if (selectedRow != -1) {
-                // Populate text fields with the selected row's data
-                empIdTF.setText(tableModel.getValueAt(selectedRow, 0).toString()); // ID
-                fnameTF.setText(tableModel.getValueAt(selectedRow, 1).toString()); // First Name
-                lnameTF.setText(tableModel.getValueAt(selectedRow, 2).toString()); // Last Name
-                positionTF.setText(tableModel.getValueAt(selectedRow, 3).toString()); // Position
-                rateTF.setText(tableModel.getValueAt(selectedRow, 4).toString()); // Rate
-                addressTF.setText(tableModel.getValueAt(selectedRow, 5).toString()); // Address
-                phoneNumberTF.setText(tableModel.getValueAt(selectedRow, 6).toString()); // Phone Number
-                emailTF.setText(tableModel.getValueAt(selectedRow, 7).toString()); // Email
-                hireDateTF.setText(tableModel.getValueAt(selectedRow, 8).toString()); // Hire Date
+                if (selectedRow != -1) {
+                    // Populate text fields with the selected row's data
+                    empIdTF.setText(tableModel.getValueAt(selectedRow, 0).toString()); // ID
+                    fnameTF.setText(tableModel.getValueAt(selectedRow, 1).toString()); // First Name
+                    lnameTF.setText(tableModel.getValueAt(selectedRow, 2).toString()); // Last Name
+                    positionTF.setText(tableModel.getValueAt(selectedRow, 3).toString()); // Position
+                    rateTF.setText(tableModel.getValueAt(selectedRow, 4).toString()); // Rate
+                    addressTF.setText(tableModel.getValueAt(selectedRow, 5).toString()); // Address
+                    phoneNumberTF.setText(tableModel.getValueAt(selectedRow, 6).toString()); // Phone Number
+                    emailTF.setText(tableModel.getValueAt(selectedRow, 7).toString()); // Email
+                    hireDateTF.setText(tableModel.getValueAt(selectedRow, 8).toString()); // Hire Date
+                }
             }
-        }
-    });
-}
+        });
+    }
 
     // Method to fetch employees from the database and populate the table
     public void fetchEmployees() {
-    try {
-        String sql = "SELECT employee_id, fname, lname, position, rate, address, phoneN, email, hire_date FROM employees";
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
+        try {
+            String sql = "SELECT employee_id, fname, lname, position, rate, address, phoneN, email, hire_date FROM employees";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
 
-        // Clear the table first
-        tableModel.setRowCount(0);
+            // Clear the table first
+            tableModel.setRowCount(0);
 
-        // Populate the table with fetched data
-        while (resultSet.next()) {
-            String employeeId = resultSet.getString("employee_id");
-            String fname = resultSet.getString("fname");
-            String lname = resultSet.getString("lname");
-            String position = resultSet.getString("position");
-            String rate = resultSet.getString("rate");
-            String address = resultSet.getString("address");
-            String phoneN = resultSet.getString("phoneN");  // Correct phone number column
-            String email = resultSet.getString("email");    // Correct email column
-            String hireDate = resultSet.getString("hire_date");  // Correct hire date column
+            // Populate the table with fetched data
+            while (resultSet.next()) {
+                String employeeId = resultSet.getString("employee_id");
+                String fname = resultSet.getString("fname");
+                String lname = resultSet.getString("lname");
+                String position = resultSet.getString("position");
+                String rate = resultSet.getString("rate");
+                String address = resultSet.getString("address");
+                String phoneN = resultSet.getString("phoneN");  // Correct phone number column
+                String email = resultSet.getString("email");    // Correct email column
+                String hireDate = resultSet.getString("hire_date");  // Correct hire date column
 
-            // Add the data to the table model
-            tableModel.addRow(new Object[]{
-                employeeId, fname, lname, position, rate, address, phoneN, email, hireDate
-            });
+                // Add the data to the table model
+                tableModel.addRow(new Object[]{
+                    employeeId, fname, lname, position, rate, address, phoneN, email, hireDate
+                });
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error fetching employees: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error fetching employees: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
     }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -472,8 +471,8 @@ public class ManageEmployee extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(hireDateTF, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(49, 49, 49)
-                        .addComponent(addBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(addBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(deleteBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -513,14 +512,14 @@ public class ManageEmployee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public String generatePassword(int length) {
-            StringBuilder password = new StringBuilder();
-            for (int i = 0; i < length; i++) {
-                int index = random.nextInt(CHARACTERS.length());
-                password.append(CHARACTERS.charAt(index));
-            }
-            return password.toString();
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(CHARACTERS.length());
+            password.append(CHARACTERS.charAt(index));
+        }
+        return password.toString();
     }
-    
+
     public void createLogIn(int empId, String fname, String lname) {
         String sql = "INSERT INTO employee_logins (employee_id, username, password_hash) VALUES (?, ?, ?)";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
@@ -537,213 +536,200 @@ public class ManageEmployee extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error inserting employee login!");
         }
     }
-    
+
     private void addBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBTNActionPerformed
-    String employee_id = empIdTF.getText();
-    String fname = fnameTF.getText();
-    String lname = lnameTF.getText();
-    String position = positionTF.getText();
-    String rate = rateTF.getText();
-    String address = addressTF.getText();
-    String phoneN = phoneNumberTF.getText(); // Get phone number
-    String email = emailTF.getText(); // Get email
-    String hireDate = hireDateTF.getText(); // Get hire date
+        String employee_id = empIdTF.getText();
+        String fname = fnameTF.getText();
+        String lname = lnameTF.getText();
+        String position = positionTF.getText();
+        String rate = rateTF.getText();
+        String address = addressTF.getText();
+        String phoneN = phoneNumberTF.getText(); // Get phone number
+        String email = emailTF.getText(); // Get email
+        String hireDate = hireDateTF.getText(); // Get hire date
 
-    // Check if any field is empty
-    if (employee_id.isEmpty() || fname.isEmpty() || lname.isEmpty() || position.isEmpty() || rate.isEmpty() || address.isEmpty() || phoneN.isEmpty() || email.isEmpty() || hireDate.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Warning", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    try {
-        Integer.valueOf(employee_id);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Employee ID must be a number!", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        Double.valueOf(rate);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Rate must be a number!", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        String sql = "INSERT INTO employees (employee_id, fname, lname, position, rate, address, phoneN, email, hire_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement statement = connection.prepareStatement(sql);
-
-        statement.setInt(1, Integer.parseInt(employee_id));
-        statement.setString(2, fname);
-        statement.setString(3, lname);
-        statement.setString(4, position);
-        statement.setDouble(5, Double.parseDouble(rate));
-        statement.setString(6, address);
-        statement.setString(7, phoneN); // Set phone number
-        statement.setString(8, email); // Set email
-        statement.setString(9, hireDate); // Set hire date
-
-        int rowsInserted = statement.executeUpdate();
-        if (rowsInserted > 0) {
-            tableModel.addRow(new Object[]{
-                employee_id, fname, lname, position, rate, address, phoneN, email, hireDate
-            });
-            JOptionPane.showMessageDialog(this, "Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            clearFields(); // Reset the input fields after adding
+        // Check if any field is empty
+        if (employee_id.isEmpty() || fname.isEmpty() || lname.isEmpty() || position.isEmpty() || rate.isEmpty() || address.isEmpty() || phoneN.isEmpty() || email.isEmpty() || hireDate.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error adding employee to database! Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
-    }
-    
-    createLogIn(Integer.parseInt(employee_id), fname, lname);
+
+        try {
+            Integer.valueOf(employee_id);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Employee ID must be a number!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            Double.valueOf(rate);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Rate must be a number!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            String sql = "INSERT INTO employees (employee_id, fname, lname, position, rate, address, phoneN, email, hire_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, Integer.parseInt(employee_id));
+            statement.setString(2, fname);
+            statement.setString(3, lname);
+            statement.setString(4, position);
+            statement.setDouble(5, Double.parseDouble(rate));
+            statement.setString(6, address);
+            statement.setString(7, phoneN); // Set phone number
+            statement.setString(8, email); // Set email
+            statement.setString(9, hireDate); // Set hire date
+
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                tableModel.addRow(new Object[]{
+                    employee_id, fname, lname, position, rate, address, phoneN, email, hireDate
+                });
+                JOptionPane.showMessageDialog(this, "Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                clearFields(); // Reset the input fields after adding
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error adding employee to database! Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
+        createLogIn(Integer.parseInt(employee_id), fname, lname);
 
     }//GEN-LAST:event_addBTNActionPerformed
 
     private void editBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBTNActionPerformed
         int selectedRow = employeeTable.getSelectedRow();
- 
-    if (selectedRow != -1) {
- 
-        String id = empIdTF.getText().trim();
-        String fname = fnameTF.getText().trim();
-        String lname = lnameTF.getText().trim();
-        String position = positionTF.getText().trim();
-        String rateStr = rateTF.getText().trim();
-        String address = addressTF.getText().trim();
-        String phoneN = phoneNumberTF.getText().trim();
-        String email = emailTF.getText().trim();
-        String hireDate = hireDateTF.getText().trim();
- 
-        if (id.isEmpty() || fname.isEmpty() || lname.isEmpty() || position.isEmpty() || rateStr.isEmpty() || address.isEmpty() || phoneN.isEmpty() || email.isEmpty() || hireDate.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields.");
-            return;
-        }
- 
-        double rate;
-        try {
-            rate = Double.parseDouble(rateStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid rate.");
-            return;
-        }
- 
-        int confirmation = JOptionPane.showConfirmDialog(this, 
-            "Are you sure you want to update this employee's details?", 
-            "Confirm Update", 
-            JOptionPane.YES_NO_OPTION);
- 
-        if (confirmation == JOptionPane.YES_OPTION) {
-            tableModel.setValueAt(fname, selectedRow, 1);  
-            tableModel.setValueAt(lname, selectedRow, 2); 
-            tableModel.setValueAt(position, selectedRow, 3);  
-            tableModel.setValueAt(rate, selectedRow, 4);  
-            tableModel.setValueAt(address, selectedRow, 5); 
-            tableModel.setValueAt(phoneN, selectedRow, 6);  
-            tableModel.setValueAt(email, selectedRow, 7);  
-            tableModel.setValueAt(hireDate, selectedRow, 8);  
- 
-            try {
-                String sql = "UPDATE employees SET fname = ?, lname = ?, position = ?, rate = ?, address = ?, phoneN = ?, email = ?, hire_date = ? WHERE employee_id = ?";
-                PreparedStatement statement = connection.prepareStatement(sql);
- 
-                statement.setString(1, fname);
-                statement.setString(2, lname);
-                statement.setString(3, position);
-                statement.setDouble(4, rate);
-                statement.setString(5, address);
-                statement.setString(6, phoneN);
-                statement.setString(7, email);
-                statement.setString(8, hireDate);
-                statement.setInt(9, Integer.parseInt(id));
- 
-                int rowsUpdated = statement.executeUpdate();
-                if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(this, "Employee updated successfully!");
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Error updating employee! " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        if (selectedRow != -1) {
+
+            String id = empIdTF.getText().trim();
+            String fname = fnameTF.getText().trim();
+            String lname = lnameTF.getText().trim();
+            String position = positionTF.getText().trim();
+            String rateStr = rateTF.getText().trim();
+            String address = addressTF.getText().trim();
+            String phoneN = phoneNumberTF.getText().trim();
+            String email = emailTF.getText().trim();
+            String hireDate = hireDateTF.getText().trim();
+
+            if (id.isEmpty() || fname.isEmpty() || lname.isEmpty() || position.isEmpty() || rateStr.isEmpty() || address.isEmpty() || phoneN.isEmpty() || email.isEmpty() || hireDate.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill all fields.");
+                return;
             }
+
+            double rate;
+            try {
+                rate = Double.parseDouble(rateStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid rate.");
+                return;
+            }
+
+            int confirmation = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to update this employee's details?",
+                    "Confirm Update",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmation == JOptionPane.YES_OPTION) {
+                tableModel.setValueAt(fname, selectedRow, 1);
+                tableModel.setValueAt(lname, selectedRow, 2);
+                tableModel.setValueAt(position, selectedRow, 3);
+                tableModel.setValueAt(rate, selectedRow, 4);
+                tableModel.setValueAt(address, selectedRow, 5);
+                tableModel.setValueAt(phoneN, selectedRow, 6);
+                tableModel.setValueAt(email, selectedRow, 7);
+                tableModel.setValueAt(hireDate, selectedRow, 8);
+
+                try {
+                    String sql = "UPDATE employees SET fname = ?, lname = ?, position = ?, rate = ?, address = ?, phoneN = ?, email = ?, hire_date = ? WHERE employee_id = ?";
+                    PreparedStatement statement = connection.prepareStatement(sql);
+
+                    statement.setString(1, fname);
+                    statement.setString(2, lname);
+                    statement.setString(3, position);
+                    statement.setDouble(4, rate);
+                    statement.setString(5, address);
+                    statement.setString(6, phoneN);
+                    statement.setString(7, email);
+                    statement.setString(8, hireDate);
+                    statement.setInt(9, Integer.parseInt(id));
+
+                    int rowsUpdated = statement.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        JOptionPane.showMessageDialog(this, "Employee updated successfully!");
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(this, "Error updating employee! " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select an employee to edit.");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Please select an employee to edit.");
-    }
     }//GEN-LAST:event_editBTNActionPerformed
 
     private void deleteBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBTNActionPerformed
-    int selectedRow = employeeTable.getSelectedRow();
+        int selectedRow = employeeTable.getSelectedRow();
 
-    if (selectedRow != -1) {
-    // Get the employee ID of the selected row
-    String employee_id = tableModel.getValueAt(selectedRow, 0).toString();
+        if (selectedRow != -1) {
+            String employee_id = tableModel.getValueAt(selectedRow, 0).toString();
 
-    // Ask for confirmation before deleting
-    int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this employee?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-    if (confirmation == JOptionPane.YES_OPTION) {
-        // Remove the selected row from the table model
-        tableModel.removeRow(selectedRow);
+            int confirmation = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to delete this employee?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION);
 
-        // Delete the employee and their login from the database
-        try {
-            // Start a transaction
-            connection.setAutoCommit(false);
+            if (confirmation == JOptionPane.YES_OPTION) {
+                try {
+                    // First delete from employee_logins
+                    String deleteLoginSQL = "DELETE FROM employee_logins WHERE employee_id = ?";
+                    PreparedStatement loginStatement = connection.prepareStatement(deleteLoginSQL);
+                    loginStatement.setInt(1, Integer.parseInt(employee_id));
+                    loginStatement.executeUpdate();
 
-            // Delete the login information from employee_logins table
-            String deleteLoginSql = "DELETE FROM employee_logins WHERE employee_id = ?";
-            PreparedStatement deleteLoginStatement = connection.prepareStatement(deleteLoginSql);
-            deleteLoginStatement.setInt(1, Integer.parseInt(employee_id));
+                    // Then delete from employees
+                    String deleteEmployeeSQL = "DELETE FROM employees WHERE employee_id = ?";
+                    PreparedStatement employeeStatement = connection.prepareStatement(deleteEmployeeSQL);
+                    employeeStatement.setInt(1, Integer.parseInt(employee_id));
 
-            int loginRowsDeleted = deleteLoginStatement.executeUpdate();
-
-            // Delete the employee from the employees table
-            String deleteEmployeeSql = "DELETE FROM employees WHERE employee_id = ?";
-            PreparedStatement deleteEmployeeStatement = connection.prepareStatement(deleteEmployeeSql);
-            deleteEmployeeStatement.setInt(1, Integer.parseInt(employee_id));
-
-            int employeeRowsDeleted = deleteEmployeeStatement.executeUpdate();
-
-            // If both deletions are successful, commit the transaction
-            if (loginRowsDeleted > 0 && employeeRowsDeleted > 0) {
-                connection.commit();
-                JOptionPane.showMessageDialog(this, "Employee and login deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                connection.rollback();
-                JOptionPane.showMessageDialog(this, "Error: Employee or login ID not found in the database.", "Error", JOptionPane.ERROR_MESSAGE);
+                    int rowsDeleted = employeeStatement.executeUpdate();
+                    if (rowsDeleted > 0) {
+                        tableModel.removeRow(selectedRow);
+                        JOptionPane.showMessageDialog(this,
+                                "Employee deleted successfully!",
+                                "Success",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this,
+                                "Error: Employee ID not found in the database.",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(this,
+                            "Error deleting employee: " + e.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
             }
-        } catch (SQLException e) {
-            try {
-                // Rollback the transaction in case of an error
-                connection.rollback();
-            } catch (SQLException rollbackException) {
-                rollbackException.printStackTrace();
-            }
-            JOptionPane.showMessageDialog(this, "Error deleting employee and login from database: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        } finally {
-            // Restore the auto-commit mode
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete.");
         }
-    }
-} else {
-    JOptionPane.showMessageDialog(this, "Please select a row to delete.");
-}
 
     }//GEN-LAST:event_deleteBTNActionPerformed
 
     private void clearBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBTNActionPerformed
         if (empIdTF.getText().isEmpty() && fnameTF.getText().isEmpty() && positionTF.getText().isEmpty() && rateTF.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Fields are already empty. Nothing to clear.");
-    } else {
-        // Clear the fields if they are not empty
-        clearFields();
-    }
+            JOptionPane.showMessageDialog(this, "Fields are already empty. Nothing to clear.");
+        } else {
+            // Clear the fields if they are not empty
+            clearFields();
+        }
     }//GEN-LAST:event_clearBTNActionPerformed
-     private void clearFields() {
-         empIdTF.setText("");
+    private void clearFields() {
+        empIdTF.setText("");
         fnameTF.setText("");
         lnameTF.setText("");
         positionTF.setText("");
@@ -752,7 +738,7 @@ public class ManageEmployee extends javax.swing.JFrame {
         emailTF.setText("");
         phoneNumberTF.setText("");
         hireDateTF.setText("");
-     }
+    }
     private void rateTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rateTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rateTFActionPerformed
@@ -774,35 +760,35 @@ public class ManageEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_searchTFActionPerformed
 
     private void searchBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBTNActionPerformed
-       String searchTerm = searchTF.getText().trim();
+        String searchTerm = searchTF.getText().trim();
 
-    if (searchTerm.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter an ID to search.");
-        return;
-    }
-
-    boolean found = false;
-    for (int i = 0; i < tableModel.getRowCount(); i++) {
-        String id = (String) tableModel.getValueAt(i, 0);
-        
-        // Making the search case-insensitive
-        if (id.equalsIgnoreCase(searchTerm)) {
-            // Highlight the row
-            employeeTable.setRowSelectionInterval(i, i);
-            
-            // Scroll to the row
-            employeeTable.scrollRectToVisible(employeeTable.getCellRect(i, 0, true));
-            
-            found = true;
-            break;
+        if (searchTerm.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an ID to search.");
+            return;
         }
-    }
 
-    if (!found) {
-        JOptionPane.showMessageDialog(this, "Employee with ID " + searchTerm + " not found.");
-        // Optionally clear the selection if not found
-        employeeTable.clearSelection();
-    }
+        boolean found = false;
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            String id = (String) tableModel.getValueAt(i, 0);
+
+            // Making the search case-insensitive
+            if (id.equalsIgnoreCase(searchTerm)) {
+                // Highlight the row
+                employeeTable.setRowSelectionInterval(i, i);
+
+                // Scroll to the row
+                employeeTable.scrollRectToVisible(employeeTable.getCellRect(i, 0, true));
+
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Employee with ID " + searchTerm + " not found.");
+            // Optionally clear the selection if not found
+            employeeTable.clearSelection();
+        }
 
     }//GEN-LAST:event_searchBTNActionPerformed
 

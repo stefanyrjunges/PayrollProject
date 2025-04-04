@@ -154,26 +154,26 @@ public class SalaryAdmin {
 
         return weekTotal;
     }
-    
-     public void updateEmployeeSalary(int employeeId, int weekNumber, double newSalary) {
-         System.out.println("Updating salary in DB: Employee ID " + employeeId + ", Week " + weekNumber);
-         System.out.println("Salary before taxes: " + newSalary);
 
-         String updateQuery = "UPDATE weekly_finance SET salary = ? WHERE employee_id = ? AND weekNumber = ?";
+    public void updateEmployeeSalary(int employeeId, int weekNumber, double newSalary) {
+        System.out.println("Updating salary in DB: Employee ID " + employeeId + ", Week " + weekNumber);
+        System.out.println("Salary before taxes: " + newSalary);
 
-         try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement(updateQuery)) {
+        String updateQuery = "UPDATE weekly_finance SET salary = ? WHERE employee_id = ? AND weekNumber = ?";
 
-             ps.setDouble(1, newSalary);  // Ensure it's the after-tax salary
-             ps.setInt(2, employeeId);
-             ps.setInt(3, weekNumber);
-             ps.executeUpdate();
+        try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement(updateQuery)) {
 
-             System.out.println("Updated salary after taxes: " + newSalary);
+            ps.setDouble(1, newSalary);  // Ensure it's the after-tax salary
+            ps.setInt(2, employeeId);
+            ps.setInt(3, weekNumber);
+            ps.executeUpdate();
 
-         } catch (SQLException e) {
-             System.out.println("Error updating salary: " + e.getMessage());
-             e.printStackTrace();
+            System.out.println("Updated salary after taxes: " + newSalary);
+
+        } catch (SQLException e) {
+            System.out.println("Error updating salary: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-}
 
 }
