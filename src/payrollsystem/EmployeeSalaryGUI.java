@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * DatabaseManager.java February 2025
- *
  * @author Murilo Batiuk
  */
 public class EmployeeSalaryGUI extends javax.swing.JFrame {
@@ -389,10 +388,6 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tableVisible() {
-        weektableTBL.setVisible(true);
-        tblSCRLPN.setVisible(true);
-    }
 
     private void decemberBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decemberBTNActionPerformed
         // TODO add your handling code here:
@@ -492,7 +487,7 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
         List<Object[]> financeData = Admin.loadEmployeeFinance(employeeId, month);
 
         DefaultTableModel model = (DefaultTableModel) weektableTBL.getModel();
-        model.setRowCount(0);  // Clear existing rows
+        model.setRowCount(0); 
 
         for (Object[] row : financeData) {
             model.addRow(row);

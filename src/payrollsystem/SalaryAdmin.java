@@ -96,13 +96,14 @@ public class SalaryAdmin {
 
                 double weekTotal = totalHours * empInfo.getRate();
 
-                if (String.format("%.2f", weekTotal).equals("0,00")) {
-                    financeData.add(new Object[]{weekNumber, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"});
+                if (weekTotal == 0.00) {
+                    Object[] rowData = {weekNumber, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"};
+                    financeData.add(rowData);
                 } else {
 
                     newSalary = afterTaxes(weekTotal);
 
-                    financeData.add(new Object[]{
+                    Object[] rowData = {
                         weekNumber,
                         rs.getInt("monday"),
                         rs.getInt("tuesday"),
@@ -113,8 +114,9 @@ public class SalaryAdmin {
                         rs.getInt("sunday"),
                         String.format("%.2f", weekTotal),
                         String.format("%.2f", newSalary)
-                    });
+                    };
 
+                    financeData.add(rowData);
                     updateEmployeeSalary(employeeId, weekNumber, newSalary);
                 }
             }
@@ -171,7 +173,4 @@ public class SalaryAdmin {
         return weekTotal;
     }
 
-    public double getNewSalary() {
-        return newSalary;
-    }
 }
