@@ -24,6 +24,7 @@ public class StatementGenerator {
 
     private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
     private final FinanceDataFetcher fm = new FinanceDataFetcher();
+    SalaryAdmin salaryAdmin = new SalaryAdmin();
     DefaultListModel<String> listModel;
 
     public StatementGenerator() {
@@ -32,10 +33,10 @@ public class StatementGenerator {
 
     public void generateEmployeeStatement() throws IOException {
 
-        File directory = new File("statements"); // Relative path
+        File directory = new File("statements");
 
         if (!directory.exists()) {
-            directory.mkdir(); // Create directory if it doesn't exist
+            directory.mkdir();
         }
 
         String dest = "statements/Week" + employeeInfo.getWeekNumber() + "Statement.pdf";
@@ -48,15 +49,13 @@ public class StatementGenerator {
                 PdfFont fontRegular = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
                 document.setMargins(100, 100, 100, 100);
 
-                // Add a page
                 PdfPage page = pdfDoc.addNewPage();
 
-                // Create a PdfCanvas for drawing on the page
                 PdfCanvas canvas = new PdfCanvas(page);
 
                 canvas.setStrokeColor(ColorConstants.ORANGE)
-                        .moveTo(100, 710) // Start point
-                        .lineTo(500, 710) // End point
+                        .moveTo(100, 710)
+                        .lineTo(500, 710) 
                         .stroke();
 
                 document.add(new Paragraph("EMPLOYEE STATEMENT REPORT").setFont(fontBold).setFontSize(20).setMarginBottom(30));
@@ -82,10 +81,10 @@ public class StatementGenerator {
     public void generateFinancialReport() {
 
         List<EmployeeInfo> empFinancialInfo = fm.loadAllEmployeesFinance();
-        File directory = new File("statements"); // Relative path
+        File directory = new File("statements");
 
         if (!directory.exists()) {
-            directory.mkdir(); // Create directory if it doesn't exist
+            directory.mkdir();
         }
 
         String dest = "statements/Week" + employeeInfo.getWeekNumber() + "FinancialReport.pdf";
@@ -97,20 +96,18 @@ public class StatementGenerator {
 
             document.setMargins(100, 100, 100, 100);
 
-            // Add a page
             PdfPage page = pdfDoc.addNewPage();
 
-            // Create a PdfCanvas for drawing on the page
             PdfCanvas canvas = new PdfCanvas(page);
 
             canvas.setStrokeColor(ColorConstants.BLUE)
-                    .moveTo(100, 710) // Start point
-                    .lineTo(500, 710) // End point
+                    .moveTo(100, 710)
+                    .lineTo(500, 710) 
                     .stroke();
 
             document.add(new Paragraph("FINANCIAL REPORT").setFont(fontBold).setFontSize(20).setMarginBottom(30));
 
-            for (EmployeeInfo ei : empFinancialInfo) {  // Loop through employees
+            for (EmployeeInfo ei : empFinancialInfo) {
 
                 document.add(new Paragraph("EMPLOYEE ID: " + ei.getId()).setFont(fontBold).setFontSize(18));
                 document.add(new Paragraph("TOTAL HOURS WORKED: " + ei.getTotalHours()).setFont(fontRegular).setFontSize(12));

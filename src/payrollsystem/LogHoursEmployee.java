@@ -528,7 +528,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
                 returnBTNActionPerformed(evt);
             }
         });
-        jPanel2.add(returnBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 790, 320, 22));
+        jPanel2.add(returnBTN, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 670, 320, 22));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(81, 81, 81));
@@ -604,8 +604,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 909, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(267, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 909, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();

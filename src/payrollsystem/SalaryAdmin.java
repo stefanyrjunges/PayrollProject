@@ -131,24 +131,6 @@ public class SalaryAdmin {
         return financeData;
     }
 
-    public void updateEmployeeSalary(int employeeId, int weekNumber, double newSalary) {
-        String updateQuery = "UPDATE weekly_finance SET salary = ? WHERE employee_id = ? AND weekNumber = ?";
-
-        try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement(updateQuery)) {
-
-            ps.setDouble(1, newSalary);
-            ps.setInt(2, employeeId);
-            ps.setInt(3, weekNumber);
-            ps.executeUpdate();
-
-            System.out.println("Updated salary for Employee ID: " + employeeId + ", Week: " + weekNumber);
-
-        } catch (SQLException e) {
-            System.out.println("Error updating salary: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     public double afterTaxes(double weekTotal) {
         if (weekTotal <= 740) {
             weekTotal -= weekTotal * 0.2;
@@ -172,5 +154,26 @@ public class SalaryAdmin {
 
         return weekTotal;
     }
+    
+     public void updateEmployeeSalary(int employeeId, int weekNumber, double newSalary) {
+         System.out.println("Updating salary in DB: Employee ID " + employeeId + ", Week " + weekNumber);
+         System.out.println("Salary before taxes: " + newSalary);
+
+         String updateQuery = "UPDATE weekly_finance SET salary = ? WHERE employee_id = ? AND weekNumber = ?";
+
+         try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement(updateQuery)) {
+
+             ps.setDouble(1, newSalary);  // Ensure it's the after-tax salary
+             ps.setInt(2, employeeId);
+             ps.setInt(3, weekNumber);
+             ps.executeUpdate();
+
+             System.out.println("Updated salary after taxes: " + newSalary);
+
+         } catch (SQLException e) {
+             System.out.println("Error updating salary: " + e.getMessage());
+             e.printStackTrace();
+    }
+}
 
 }
