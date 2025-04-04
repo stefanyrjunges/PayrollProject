@@ -18,7 +18,7 @@ import javax.swing.Timer;
 
 /**
  *
- * @author tenhe
+ * @author
  */
 public class LogHoursEmployee extends javax.swing.JFrame {
     private Timer timer;
@@ -62,7 +62,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
             mondayTimeInSpinner, mondayTimeOutSpinner, mondayBreakTF, totalHoursMondayTF));
         tuesdayCalculateBtn.addActionListener(e -> calculateDailyHours("Tuesday", 
             tuesdayTimeInSpinner, tuesdayTimeOutSpinner, tuesdayBreakTF, totalHoursTuesdayTF));
-        returnBTN.addActionListener(e -> calculateDailyHours("Wednesday", 
+        wednesdayCalculateBtn.addActionListener(e -> calculateDailyHours("Wednesday", 
             wednesdayTimeInSpinner, wednesdayTimeOutSpinner, wednesdayBreakTF, totalHoursWednesdayTF));
         thursdayCalculateBtn.addActionListener(e -> calculateDailyHours("Thursday", 
             thursdayTimeInSpinner, thursdayTimeOutSpinner, thursdayBreakTF, totalHoursThursdayTF));
@@ -275,7 +275,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         saturdayCalculateBtn = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         sundayCalculateBtn = new javax.swing.JButton();
-        wednesdayCalculateBtn1 = new javax.swing.JButton();
+        wednesdayCalculateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -510,6 +510,11 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         tuesdayCalculateBtn.setText("CALCULATE");
         tuesdayCalculateBtn.setBorder(null);
         tuesdayCalculateBtn.setBorderPainted(false);
+        tuesdayCalculateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tuesdayCalculateBtnActionPerformed(evt);
+            }
+        });
         jPanel2.add(tuesdayCalculateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 320, 22));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -554,6 +559,11 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         fridayCalculateBtn.setText("CALCULATE");
         fridayCalculateBtn.setBorder(null);
         fridayCalculateBtn.setBorderPainted(false);
+        fridayCalculateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fridayCalculateBtnActionPerformed(evt);
+            }
+        });
         jPanel2.add(fridayCalculateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 280, 22));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -582,13 +592,18 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         sundayCalculateBtn.setBorderPainted(false);
         jPanel2.add(sundayCalculateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 140, 250, 22));
 
-        wednesdayCalculateBtn1.setBackground(new java.awt.Color(237, 170, 12));
-        wednesdayCalculateBtn1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        wednesdayCalculateBtn1.setForeground(new java.awt.Color(255, 255, 255));
-        wednesdayCalculateBtn1.setText("CALCULATE");
-        wednesdayCalculateBtn1.setBorder(null);
-        wednesdayCalculateBtn1.setBorderPainted(false);
-        jPanel2.add(wednesdayCalculateBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 320, 22));
+        wednesdayCalculateBtn.setBackground(new java.awt.Color(237, 170, 12));
+        wednesdayCalculateBtn.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        wednesdayCalculateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        wednesdayCalculateBtn.setText("CALCULATE");
+        wednesdayCalculateBtn.setBorder(null);
+        wednesdayCalculateBtn.setBorderPainted(false);
+        wednesdayCalculateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wednesdayCalculateBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(wednesdayCalculateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 320, 22));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -749,6 +764,18 @@ private void clearForm() {
         this.dispose();
     }//GEN-LAST:event_returnBTNActionPerformed
 
+    private void wednesdayCalculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wednesdayCalculateBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_wednesdayCalculateBtnActionPerformed
+
+    private void tuesdayCalculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tuesdayCalculateBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tuesdayCalculateBtnActionPerformed
+
+    private void fridayCalculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fridayCalculateBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fridayCalculateBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -853,7 +880,7 @@ private void clearForm() {
     private javax.swing.JSpinner tuesdayTimeInSpinner;
     private javax.swing.JSpinner tuesdayTimeOutSpinner;
     private javax.swing.JTextField wednesdayBreakTF;
-    private javax.swing.JButton wednesdayCalculateBtn1;
+    private javax.swing.JButton wednesdayCalculateBtn;
     private javax.swing.JLabel wednesdayLabel;
     private javax.swing.JSpinner wednesdayTimeInSpinner;
     private javax.swing.JSpinner wednesdayTimeOutSpinner;

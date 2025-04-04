@@ -10,7 +10,7 @@ public class SubmissionManager {
 
     public HoursSubmissionData loadStatus() {
         String query = "SELECT wf.employee_id, CONCAT(e.fname, ' ', e.lname) AS fullName, "
-                + "wf.weekNumber, wf.total_hours, wf.salary, "
+                + "wf.weekNumber, wf.total_hours, wf.salary_after_taxes, "
                 + "wf.monday, wf.tuesday, wf.wednesday, wf.thursday, wf.friday, wf.saturday, wf.sunday "
                 + "FROM weekly_finance wf "
                 + "INNER JOIN employees e ON wf.employee_id = e.employee_id "
@@ -24,7 +24,7 @@ public class SubmissionManager {
                 String employeeName = rsTotal.getString("fullName");
                 int weekNumber = rsTotal.getInt("weekNumber");
                 double totalHours = rsTotal.getDouble("total_hours");
-                double salary = rsTotal.getDouble("salary");
+                double salary = rsTotal.getDouble("salary_after_taxes");
 
                 StringBuilder workedDays = new StringBuilder();
 

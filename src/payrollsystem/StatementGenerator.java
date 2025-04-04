@@ -24,7 +24,6 @@ public class StatementGenerator {
 
     private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
     private final FinanceDataFetcher fm = new FinanceDataFetcher();
-    SalaryAdmin salaryAdmin = new SalaryAdmin();
     DefaultListModel<String> listModel;
 
     public StatementGenerator() {
@@ -65,7 +64,7 @@ public class StatementGenerator {
                 document.add(new Paragraph("ROLE: " + employeeInfo.getRole()).setFont(fontRegular).setFontSize(12).setMarginBottom(30));
                 document.add(new Paragraph("WEEK " + employeeInfo.getWeekNumber() + " SUMMARY").setFont(fontBold).setFontSize(15));
                 document.add(new Paragraph("TOTAL HOURS WORKED: " + employeeInfo.getTotalHours()).setFont(fontRegular).setFontSize(12));
-                document.add(new Paragraph("ESTIMATED SALARY: " + employeeInfo.getSalary()).setFont(fontRegular).setFontSize(12));
+                document.add(new Paragraph("ESTIMATED SALARY FOR CURRENT WEEK: " + employeeInfo.getSalary()).setFont(fontRegular).setFontSize(12));
             }
 
             System.out.println("Created");
@@ -111,11 +110,11 @@ public class StatementGenerator {
 
                 document.add(new Paragraph("EMPLOYEE ID: " + ei.getId()).setFont(fontBold).setFontSize(18));
                 document.add(new Paragraph("TOTAL HOURS WORKED: " + ei.getTotalHours()).setFont(fontRegular).setFontSize(12));
-                document.add(new Paragraph("ESTIMATED SALARY: €" + ei.getSalary()).setFont(fontRegular).setFontSize(12).setMarginBottom(30));
+                document.add(new Paragraph("ESTIMATED SALARY FOR CURRENT WEEK: €" + ei.getSalary()).setFont(fontRegular).setFontSize(12).setMarginBottom(30));
 
             }
 
-            document.add(new Paragraph("TOTAL LABOUR COST: €" + fm.loadTotalLabourCost()).setFont(fontRegular).setFontSize(12).setMarginBottom(30));
+            document.add(new Paragraph("TOTAL LABOUR COST FOR CURRENT WEEK: €" + fm.loadTotalLabourCost()).setFont(fontRegular).setFontSize(12).setMarginBottom(30));
 
         } catch (Exception e) {
             System.out.println("Error creating PDF: " + e);

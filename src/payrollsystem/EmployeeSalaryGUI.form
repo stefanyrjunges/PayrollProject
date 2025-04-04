@@ -136,7 +136,7 @@
                               <Component id="decemberBTN" alignment="0" max="32767" attributes="0"/>
                               <Component id="novemberBTN" alignment="0" max="32767" attributes="0"/>
                               <Component id="octoberBTN" alignment="0" max="32767" attributes="0"/>
-                              <Component id="septemberBTN" alignment="0" max="32767" attributes="0"/>
+                              <Component id="septemberBTN" alignment="0" pref="182" max="32767" attributes="0"/>
                               <Component id="augustBTN" alignment="0" max="32767" attributes="0"/>
                               <Component id="julyBTN" alignment="0" max="32767" attributes="0"/>
                               <Component id="aprilBTN" alignment="0" max="32767" attributes="0"/>
@@ -145,17 +145,21 @@
                               <Component id="marchBTN" alignment="0" max="32767" attributes="0"/>
                               <Component id="mayBTN" alignment="0" max="32767" attributes="0"/>
                               <Component id="juneBTN" alignment="0" max="32767" attributes="0"/>
-                              <Component id="returnBTN" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="80" max="32767" attributes="0"/>
                           <Component id="tblSCRLPN" min="-2" pref="1097" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="jLabel1" min="-2" pref="206" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="returnBTN" min="-2" pref="192" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="1265" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

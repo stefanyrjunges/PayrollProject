@@ -24,7 +24,7 @@ public class FinanceDataFetcher {
             if (rs.next()) {
                 int weekNumber = rs.getInt("weekNumber");
                 int totalHours = rs.getInt("total_hours");
-                double salary = rs.getDouble("salary");
+                double salary = rs.getDouble("salary_after_taxes");
 
                 System.out.println("Total Hours Worked: " + totalHours);
                 System.out.println("Salary: €" + salary);
@@ -43,7 +43,7 @@ public class FinanceDataFetcher {
     }
 
     public List<EmployeeInfo> loadAllEmployeesFinance() {
-        financeQuery = "SELECT employee_id, weekNumber, total_hours, salary FROM weekly_finance WHERE weekNumber = WEEK(CURDATE(), 1)";
+        financeQuery = "SELECT employee_id, weekNumber, total_hours, salary_after_taxes FROM weekly_finance WHERE weekNumber = WEEK(CURDATE(), 1)";
         List<EmployeeInfo> employeeList = new ArrayList<>();
 
         try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement(financeQuery); ResultSet rs = ps.executeQuery()) {
@@ -53,7 +53,7 @@ public class FinanceDataFetcher {
                 int id = rs.getInt("employee_id");
                 int weekNumber = rs.getInt("weekNumber");
                 int totalHours = rs.getInt("total_hours");
-                double salary = rs.getDouble("salary");
+                double salary = rs.getDouble("salary_after_taxes");
 
                 employeeList.add(new EmployeeInfo(id, weekNumber, totalHours, salary));
             }
@@ -67,7 +67,7 @@ public class FinanceDataFetcher {
 
     public double loadTotalLabourCost() {
         double totalLabourCost = 0;
-        totalSalary = "SELECT SUM(salary) AS total_labour_cost FROM weekly_finance WHERE weekNumber = WEEK(CURDATE(), 1)";
+        totalSalary = "SELECT SUM(salary_after_taxes) AS total_labour_cost FROM weekly_finance WHERE weekNumber = WEEK(CURDATE(), 1)";
 
         try (Connection con = DatabaseManager.getConnection(); PreparedStatement psTotal = con.prepareStatement(totalSalary); ResultSet rsTotal = psTotal.executeQuery()) {
 

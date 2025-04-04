@@ -11,13 +11,10 @@ import java.util.List;
  */
 public class SalaryAdmin {
 
-    private double newSalary = 0.0;
-    private final EmployeeInfo empInfo = EmployeeInfo.getInstance();
-
     public List<Object[]> loadEmployeeFinance(int employeeId, int month) {
         System.out.println("Selected month: " + month);
 
-        String financeQuery = "SELECT weekNumber, monday, tuesday, wednesday, thursday, friday, saturday, sunday, salary "
+        String financeQuery = "SELECT weekNumber, monday, tuesday, wednesday, thursday, friday, saturday, sunday, salary, salary_after_taxes "
                 + "FROM weekly_finance WHERE employee_id = ? AND weekNumber BETWEEN ? AND ?";
 
         List<Object[]> financeData = new ArrayList<>();
@@ -91,33 +88,27 @@ public class SalaryAdmin {
 
             while (rs.next()) {
                 int weekNumber = rs.getInt("weekNumber");
-                int totalHours = rs.getInt("monday") + rs.getInt("tuesday") + rs.getInt("wednesday")
-                        + rs.getInt("thursday") + rs.getInt("friday") + rs.getInt("saturday") + rs.getInt("sunday");
+                double salary = rs.getDouble("salary");
 
-                double weekTotal = totalHours * empInfo.getRate();
-
-                if (weekTotal == 0.00) {
-                    Object[] rowData = {weekNumber, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"};
+                if (salary == 0.00) {
+                    Object[] rowData = {weekNumber, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"};
                     financeData.add(rowData);
                 } else {
-
-                    newSalary = afterTaxes(weekTotal);
-
                     Object[] rowData = {
                         weekNumber,
-                        rs.getInt("monday"),
-                        rs.getInt("tuesday"),
-                        rs.getInt("wednesday"),
-                        rs.getInt("thursday"),
-                        rs.getInt("friday"),
-                        rs.getInt("saturday"),
-                        rs.getInt("sunday"),
-                        String.format("%.2f", weekTotal),
-                        String.format("%.2f", newSalary)
+                        rs.getDouble("monday"),
+                        rs.getDouble("tuesday"),
+                        rs.getDouble("wednesday"),
+                        rs.getDouble("thursday"),
+                        rs.getDouble("friday"),
+                        rs.getDouble("saturday"),
+                        rs.getDouble("sunday"),
+                        rs.getDouble("salary"),
+                        rs.getDouble("salary_after_taxes")
                     };
 
                     financeData.add(rowData);
-                    updateEmployeeSalary(employeeId, weekNumber, newSalary);
+
                 }
             }
 
@@ -130,50 +121,4 @@ public class SalaryAdmin {
 
         return financeData;
     }
-
-    public double afterTaxes(double weekTotal) {
-        if (weekTotal <= 740) {
-            weekTotal -= weekTotal * 0.2;
-        } else {
-            weekTotal -= weekTotal * 0.4;
-        }
-
-        if (weekTotal <= 231) {
-            weekTotal -= weekTotal * 0.05;
-        } else if (weekTotal <= 447) {
-            weekTotal -= weekTotal * 0.02;
-        } else if (weekTotal <= 1038) {
-            weekTotal -= weekTotal * 0.04;
-        } else {
-            weekTotal -= weekTotal * 0.08;
-        }
-
-        if (weekTotal > 441) {
-            weekTotal -= weekTotal * 0.04;
-        }
-
-        return weekTotal;
-    }
-
-    public void updateEmployeeSalary(int employeeId, int weekNumber, double newSalary) {
-        System.out.println("Updating salary in DB: Employee ID " + employeeId + ", Week " + weekNumber);
-        System.out.println("Salary before taxes: " + newSalary);
-
-        String updateQuery = "UPDATE weekly_finance SET salary = ? WHERE employee_id = ? AND weekNumber = ?";
-
-        try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement(updateQuery)) {
-
-            ps.setDouble(1, newSalary);  // Ensure it's the after-tax salary
-            ps.setInt(2, employeeId);
-            ps.setInt(3, weekNumber);
-            ps.executeUpdate();
-
-            System.out.println("Updated salary after taxes: " + newSalary);
-
-        } catch (SQLException e) {
-            System.out.println("Error updating salary: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
 }

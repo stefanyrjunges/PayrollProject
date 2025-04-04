@@ -189,8 +189,8 @@
                                   <Component id="empProfileBTN" min="-2" pref="278" max="-2" attributes="0"/>
                                   <Component id="hoursBTN" min="-2" pref="278" max="-2" attributes="0"/>
                                   <Component id="holidayBTN1" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
-                                  <Component id="statementBTN" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
                                   <Component id="salaryBTN" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
+                                  <Component id="statementBTN" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -219,9 +219,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="holidayBTN1" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="statementBTN" min="-2" pref="42" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="salaryBTN" min="-2" pref="43" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="statementBTN" min="-2" pref="42" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="empProfileBTN" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace pref="106" max="32767" attributes="0"/>
