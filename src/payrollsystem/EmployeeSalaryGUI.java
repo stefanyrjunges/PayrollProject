@@ -9,13 +9,14 @@ import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 /**
- * DatabaseManager.java February 2025
- *
+ * DatabaseManager.java 
+ * February 2025
  * @author Murilo Batiuk
  */
 
 public class EmployeeSalaryGUI extends javax.swing.JFrame {
 
+    //Instances
     private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
     private final JTable financeTable;
     private final SalaryAdmin salaryAdmin;
@@ -28,21 +29,18 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
     public EmployeeSalaryGUI() {
         initComponents();
 
+        //Load employee information based on the employee ID from the database table
         dataFetcher.loadUserInformation("employee_id", "employee_logins", "employees");
 
+        //Displays a personalised greeting message using the employee name
         subtitleLBL.setText("Hello, " + employeeInfo.getName() + "!");
 
+        //Initialises SalaryAdmin for salary
         salaryAdmin = new SalaryAdmin();
 
-        // Define JTable columns
+        //Defines JTable columns
         String[] columnNames = {"Week", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Total Hours", "Total After Taxes"};
         financeTable = new JTable(new DefaultTableModel(columnNames, 0));
-
-        // Layout
-//        setTitle("Employee Salary");
-//        setSize(800, 400);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setVisible(true);
 
     }
 
@@ -350,7 +348,7 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
+    //Buttons for each month of the year. When the given month is selected, it displays the corresponding weekly information
     private void decemberBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decemberBTNActionPerformed
         // TODO add your handling code here:
 
@@ -435,6 +433,7 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_januaryBTNActionPerformed
 
+    //Return button
     private void returnBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBTNActionPerformed
         // TODO add your handling code here:
         
@@ -445,12 +444,19 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_returnBTNActionPerformed
 
     private void loadFinanceData(int month) {
+        //Gets the employee ID from the employeeInfo instance
         int employeeId = employeeInfo.getId();
+        
+        //Fetches the finance data for the specific eployee and month using SalaryAdmin
         List<Object[]> financeData = Admin.loadEmployeeFinance(employeeId, month);
 
+        //Gets the default table to modify the data displayed in the table
         DefaultTableModel model = (DefaultTableModel) weektableTBL.getModel();
-        model.setRowCount(0);  // Clear existing rows
+       
+        //Clears existing rows
+        model.setRowCount(0);  
 
+        //Iterates over the fetched finance data and each row to the table
         for (Object[] row : financeData) {
             model.addRow(row);
         }

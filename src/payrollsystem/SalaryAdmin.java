@@ -18,72 +18,75 @@ public class SalaryAdmin {
     public List<Object[]> loadEmployeeFinance(int employeeId, int month) {
         System.out.println("Selected month: " + month);
 
+        //SQL query to retrieve weekly financial data based on employee ID and week
         String financeQuery = "SELECT weekNumber, monday, tuesday, wednesday, thursday, friday, saturday, sunday, salary "
                 + "FROM weekly_finance WHERE employee_id = ? AND weekNumber BETWEEN ? AND ?";
 
+        //Array to store weekly financial data retrieved from the database.
         List<Object[]> financeData = new ArrayList<>();
 
         int startWeek = 0;
         int endWeek = 0;
 
+        //Mapping months to their corresponding week numbers
         switch (month) {
             case 1:
-                // January
+                //January
                 startWeek = 1;
                 endWeek = 4;
                 break;
             case 2:
-                // February
+                //February
                 startWeek = 5;
                 endWeek = 8;
                 break;
             case 3:
-                // March
+                //March
                 startWeek = 9;
                 endWeek = 13;
                 break;
             case 4:
-                // April
+                //April
                 startWeek = 14;
                 endWeek = 17;
                 break;
             case 5:
-                // May
+                //May
                 startWeek = 18;
                 endWeek = 21;
                 break;
             case 6:
-                // June
+                //June
                 startWeek = 22;
                 endWeek = 26;
                 break;
             case 7:
-                // July
+                //July
                 startWeek = 27;
                 endWeek = 30;
                 break;
             case 8:
-                // August
+                //August
                 startWeek = 31;
                 endWeek = 35;
                 break;
             case 9:
-                // September
+                //September
                 startWeek = 36;
                 endWeek = 39;
                 break;
             case 10:
-                // October
+                //October
                 startWeek = 40;
                 endWeek = 44;
                 break;
             case 11:
-                // November
+                //November
                 startWeek = 45;
                 endWeek = 48;
                 break;
             case 12:
-                // December
+                //December
                 startWeek = 49;
                 endWeek = 52;
                 break;
@@ -95,22 +98,28 @@ public class SalaryAdmin {
         System.out.println("Fetching data for Employee ID: " + employeeId);
         System.out.println("Month: " + month + " (Weeks: " + startWeek + " to " + endWeek + ")");
 
+        //Establishing connection and preparing the SQL query for execution
         try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement(financeQuery)) {
 
+            //Parameters for the query
             ps.setInt(1, employeeId);
             ps.setInt(2, startWeek);
             ps.setInt(3, endWeek);
 
+            //Executes the SQL query and stores the result set containing the retrieved data
             ResultSet rs = ps.executeQuery();
 
+            //Processing query results
             while (rs.next()) {
 
                 double weekTotal = rs.getDouble("salary");
 
+                //If salary is zero, return N/A (Non-Available) for all days
                 if (String.format("%.2f", weekTotal).equals("0,00")) {
                     Object[] rowData = {rs.getInt("weekNumber"), "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"};
                     financeData.add(rowData);
                 } else {
+                    //Storing weekly financial data
                     Object[] rowData = {
                         rs.getInt("weekNumber"),
                         rs.getInt("monday"),
@@ -141,27 +150,26 @@ public class SalaryAdmin {
 
     public double afterTaxes(double weekTotal) {
 
-        // Income tax rate
+        //Income tax rate
         if (weekTotal <= 740) {
-            weekTotal = weekTotal - (weekTotal * 0.2);
-        } else {
-            weekTotal = weekTotal - (weekTotal * 0.4);
+            weekTotal = weekTotal - (weekTotal * 0.2); //20% tax for income <= 740        } else {
+            weekTotal = weekTotal - (weekTotal * 0.4); //40% tax for income > 740
         }
 
-        // USC
+        //Universal Social Charge (USC) deductions
         if (weekTotal <= 231) {
-            weekTotal = weekTotal - (weekTotal * 0.05);
+            weekTotal = weekTotal - (weekTotal * 0.05); //5% for income <= 231
         } else if (weekTotal > 231 && weekTotal <= 447) {
-            weekTotal = weekTotal - (weekTotal * 0.02);
+            weekTotal = weekTotal - (weekTotal * 0.02); //2% for income between 231 and 447
         } else if (weekTotal > 447 && weekTotal <= 1038) {
-            weekTotal = weekTotal - (weekTotal * 0.04);
+            weekTotal = weekTotal - (weekTotal * 0.04); //4% for income between 447 1038
         } else if (weekTotal > 1038) {
-            weekTotal = weekTotal - (weekTotal * 0.08);
+            weekTotal = weekTotal - (weekTotal * 0.08); //8% for income > 1038
         }
 
-        // PSRI
+        //Pay-Related Social Insurance (PRSI) deduction
         if (weekTotal > 441) {
-            weekTotal = weekTotal - (weekTotal * 0.04);
+            weekTotal = weekTotal - (weekTotal * 0.04); //4% PRSI for income > 441
         }
 
         return weekTotal;
