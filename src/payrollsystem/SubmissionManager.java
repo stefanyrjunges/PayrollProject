@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+/**
+ * @author Stefany Junges
+ */
 public class SubmissionManager {
 
     public HoursSubmissionData loadStatus() {

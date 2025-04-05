@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package payrollsystem;
 
 import java.awt.event.ActionEvent;
@@ -18,9 +14,10 @@ import javax.swing.Timer;
 
 /**
  *
- * @author
+ * @author Filip
  */
 public class LogHoursEmployee extends javax.swing.JFrame {
+
     private Timer timer;
     private final EmployeeDataFetcher dataFetcher = new EmployeeDataFetcher();
     private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
@@ -29,20 +26,18 @@ public class LogHoursEmployee extends javax.swing.JFrame {
 
     public LogHoursEmployee() {
         initComponents();
-        
-        // Get employee ID from the singleton
+
         employeeId = employeeInfo.getId();
         if (employeeId == 0) {
-            JOptionPane.showMessageDialog(this, "No employee ID found. Please log in again.", 
-                "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No employee ID found. Please log in again.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             this.dispose();
             return;
         }
-        
+
         dataFetcher.loadUserInformation("employee_id", "employee_logins", "employees");
         configureTimeSpinners();
-        
-        // Initialize labels
+
         totalHoursMondayTF.setText("0.00 hours");
         totalHoursTuesdayTF.setText("0.00 hours");
         totalHoursWednesdayTF.setText("0.00 hours");
@@ -50,28 +45,26 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         totalHoursFridayTF.setText("0.00 hours");
         totalHoursSaturdayTF.setText("0.00 hours");
         totalHoursSundayTF.setText("0.00 hours");
-        
+
         startClock();
-        
-        // Set week start date
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         weekStartDateTF.setText(sdf.format(getCurrentWeekMonday()));
-        
-        // Add action listeners for calculate buttons
-        mondayCalculateBtn.addActionListener(e -> calculateDailyHours("Monday", 
-            mondayTimeInSpinner, mondayTimeOutSpinner, mondayBreakTF, totalHoursMondayTF));
-        tuesdayCalculateBtn.addActionListener(e -> calculateDailyHours("Tuesday", 
-            tuesdayTimeInSpinner, tuesdayTimeOutSpinner, tuesdayBreakTF, totalHoursTuesdayTF));
-        wednesdayCalculateBtn.addActionListener(e -> calculateDailyHours("Wednesday", 
-            wednesdayTimeInSpinner, wednesdayTimeOutSpinner, wednesdayBreakTF, totalHoursWednesdayTF));
-        thursdayCalculateBtn.addActionListener(e -> calculateDailyHours("Thursday", 
-            thursdayTimeInSpinner, thursdayTimeOutSpinner, thursdayBreakTF, totalHoursThursdayTF));
-        fridayCalculateBtn.addActionListener(e -> calculateDailyHours("Friday", 
-            fridayTimeInSpinner, fridayTimeOutSpinner, fridayBreakTF, totalHoursFridayTF));
-        saturdayCalculateBtn.addActionListener(e -> calculateDailyHours("Saturday", 
-            saturdayTimeInSpinner, saturdayTimeOutSpinner, saturdayBreakTF, totalHoursSaturdayTF));
-        sundayCalculateBtn.addActionListener(e -> calculateDailyHours("Sunday", 
-            sundayTimeInSpinner, sundayTimeOutSpinner, sundayBreakTF, totalHoursSundayTF));
+
+        mondayCalculateBtn.addActionListener(e -> calculateDailyHours("Monday",
+                mondayTimeInSpinner, mondayTimeOutSpinner, mondayBreakTF, totalHoursMondayTF));
+        tuesdayCalculateBtn.addActionListener(e -> calculateDailyHours("Tuesday",
+                tuesdayTimeInSpinner, tuesdayTimeOutSpinner, tuesdayBreakTF, totalHoursTuesdayTF));
+        wednesdayCalculateBtn.addActionListener(e -> calculateDailyHours("Wednesday",
+                wednesdayTimeInSpinner, wednesdayTimeOutSpinner, wednesdayBreakTF, totalHoursWednesdayTF));
+        thursdayCalculateBtn.addActionListener(e -> calculateDailyHours("Thursday",
+                thursdayTimeInSpinner, thursdayTimeOutSpinner, thursdayBreakTF, totalHoursThursdayTF));
+        fridayCalculateBtn.addActionListener(e -> calculateDailyHours("Friday",
+                fridayTimeInSpinner, fridayTimeOutSpinner, fridayBreakTF, totalHoursFridayTF));
+        saturdayCalculateBtn.addActionListener(e -> calculateDailyHours("Saturday",
+                saturdayTimeInSpinner, saturdayTimeOutSpinner, saturdayBreakTF, totalHoursSaturdayTF));
+        sundayCalculateBtn.addActionListener(e -> calculateDailyHours("Sunday",
+                sundayTimeInSpinner, sundayTimeOutSpinner, sundayBreakTF, totalHoursSundayTF));
     }
 
     private void startClock() {
@@ -80,14 +73,13 @@ public class LogHoursEmployee extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
                 String timeString = sdf.format(new Date());
-                clockLabel.setText(timeString); 
+                clockLabel.setText(timeString);
             }
         });
         timer.start();
     }
-    
+
     private void configureTimeSpinners() {
-        // Configure all time-in spinners
         configureSingleSpinner(mondayTimeInSpinner);
         configureSingleSpinner(tuesdayTimeInSpinner);
         configureSingleSpinner(wednesdayTimeInSpinner);
@@ -95,8 +87,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         configureSingleSpinner(fridayTimeInSpinner);
         configureSingleSpinner(saturdayTimeInSpinner);
         configureSingleSpinner(sundayTimeInSpinner);
-        
-        // Configure all time-out spinners
+
         configureSingleSpinner(mondayTimeOutSpinner);
         configureSingleSpinner(tuesdayTimeOutSpinner);
         configureSingleSpinner(wednesdayTimeOutSpinner);
@@ -105,74 +96,74 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         configureSingleSpinner(saturdayTimeOutSpinner);
         configureSingleSpinner(sundayTimeOutSpinner);
     }
-   
+
     private void configureSingleSpinner(JSpinner spinner) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        
+
         SpinnerDateModel model = new SpinnerDateModel(
-            calendar.getTime(),
-            null,
-            null,
-            Calendar.MINUTE
+                calendar.getTime(),
+                null,
+                null,
+                Calendar.MINUTE
         );
         spinner.setModel(model);
-        
+
         JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "HH:mm");
         spinner.setEditor(editor);
     }
-    
-    private void calculateDailyHours(String day, JSpinner timeIn, 
-        JSpinner timeOut, javax.swing.JTextField breakField, javax.swing.JLabel totalLabel) {
+
+    private void calculateDailyHours(String day, JSpinner timeIn,
+            JSpinner timeOut, javax.swing.JTextField breakField, javax.swing.JLabel totalLabel) {
         try {
             Date inTime = (Date) timeIn.getValue();
             Date outTime = (Date) timeOut.getValue();
-            
+
             String breakText = breakField.getText().trim();
             if (breakText.isEmpty()) {
                 breakText = "0";
             }
-            
+
             double breakMinutes = Double.parseDouble(breakText);
             if (breakMinutes < 0) {
                 throw new IllegalArgumentException("Break time cannot be negative");
             }
             double breakHours = breakMinutes / 60.0;
-            
+
             Calendar inCal = Calendar.getInstance();
             inCal.setTime(inTime);
             int inHour = inCal.get(Calendar.HOUR_OF_DAY);
             int inMinute = inCal.get(Calendar.MINUTE);
-            
+
             Calendar outCal = Calendar.getInstance();
             outCal.setTime(outTime);
             int outHour = outCal.get(Calendar.HOUR_OF_DAY);
             int outMinute = outCal.get(Calendar.MINUTE);
-            
+
             int totalMinutes = (outHour * 60 + outMinute) - (inHour * 60 + inMinute);
-            
+
             if (totalMinutes < 0) {
                 totalMinutes += 24 * 60;
             }
-            
+
             double totalHours = (totalMinutes / 60.0) - breakHours;
-            
+
             totalLabel.setText(String.format("%.2f hours", totalHours));
             updateWeeklyTotal();
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error calculating hours: " + e.getMessage(),
                     "Calculation Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void updateWeeklyTotal() {
         try {
             double total = 0;
-            
+
             total += parseLabelToHours(totalHoursMondayTF.getText());
             total += parseLabelToHours(totalHoursTuesdayTF.getText());
             total += parseLabelToHours(totalHoursWednesdayTF.getText());
@@ -180,9 +171,9 @@ public class LogHoursEmployee extends javax.swing.JFrame {
             total += parseLabelToHours(totalHoursFridayTF.getText());
             total += parseLabelToHours(totalHoursSaturdayTF.getText());
             total += parseLabelToHours(totalHoursSundayTF.getText());
-            
+
             totalWeeklyHoursTF.setText(String.format("%.2f", total));
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error calculating weekly total: " + e.getMessage(),
                     "Calculation Error", JOptionPane.ERROR_MESSAGE);
@@ -195,7 +186,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         }
         return Double.parseDouble(labelText.replace(" hours", "").trim());
     }
-    
+
     private Date getCurrentWeekMonday() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -205,7 +196,6 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -626,135 +616,132 @@ public class LogHoursEmployee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveWeeklyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveWeeklyBtnActionPerformed
-      Connection conn = null;
+        Connection conn = null;
         PreparedStatement pstmt = null;
-    
-    try {
-        String weekStartDateStr = weekStartDateTF.getText().trim();
-        if (weekStartDateStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a week start date", 
-                    "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        java.sql.Date weekStartDate;
+
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedDate = sdf.parse(weekStartDateStr);
-            weekStartDate = new java.sql.Date(parsedDate.getTime());
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this, "Invalid date format. Please use YYYY-MM-DD", 
-                    "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(weekStartDate);
-        int weekNumber = cal.get(Calendar.WEEK_OF_YEAR);
-        
-        conn = DatabaseManager.getConnection();
-        
-        // SQL UPDATE query to modify the existing row
-        String sql = "UPDATE weekly_finance SET " +
-             "monday = ?, " +
-             "tuesday = ?, " +
-             "wednesday = ?, " +
-             "thursday = ?, " +
-             "friday = ?, " +
-             "saturday = ?, " +
-             "sunday = ?, " +
-             "salary = ?, " +
-             "rejection_reason = null, " +
-             "status = ?, " +
-             "notified = ? " +
-             "WHERE employee_id = ? AND weekNumber = ?";
-        
-        pstmt = conn.prepareStatement(sql);
-   
-        double defaultSalary = 0.0;
-        
-        pstmt.setDouble(1, parseLabelToHours(totalHoursMondayTF.getText()));
-        pstmt.setDouble(2, parseLabelToHours(totalHoursTuesdayTF.getText()));
-        pstmt.setDouble(3, parseLabelToHours(totalHoursWednesdayTF.getText()));
-        pstmt.setDouble(4, parseLabelToHours(totalHoursThursdayTF.getText()));
-        pstmt.setDouble(5, parseLabelToHours(totalHoursFridayTF.getText()));
-        pstmt.setDouble(6, parseLabelToHours(totalHoursSaturdayTF.getText()));
-        pstmt.setDouble(7, parseLabelToHours(totalHoursSundayTF.getText()));
-        pstmt.setDouble(8, defaultSalary);
-        pstmt.setString(9, "pending");
-        pstmt.setInt(10, 0);
-        pstmt.setInt(11, employeeId);
-        pstmt.setInt(12, weekNumber);
-        
-        int rowsAffected = pstmt.executeUpdate();
-        
-        if (rowsAffected > 0) {
-            String message = String.format(
-                "Weekly hours updated successfully!\n" +
-                "Employee ID: %d\n" +
-                "Total hours: %s\n" +
-                "Week number: %d", 
-                employeeId,
-                totalWeeklyHoursTF.getText(),
-                weekNumber
-            );
-            
-            JOptionPane.showMessageDialog(
-                this, 
-                message,
-                "Success", 
-                JOptionPane.INFORMATION_MESSAGE
-            );
-            
-            clearForm();
-        } else {
-            JOptionPane.showMessageDialog(this, "No existing record found to update for this employee and week", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(),
-                "Database Error", JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Invalid number format in hours",
-                "Input Error", JOptionPane.ERROR_MESSAGE);
-    } finally {
-        try {
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
+            String weekStartDateStr = weekStartDateTF.getText().trim();
+            if (weekStartDateStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a week start date",
+                        "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            java.sql.Date weekStartDate;
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date parsedDate = sdf.parse(weekStartDateStr);
+                weekStartDate = new java.sql.Date(parsedDate.getTime());
+            } catch (ParseException e) {
+                JOptionPane.showMessageDialog(this, "Invalid date format. Please use YYYY-MM-DD",
+                        "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(weekStartDate);
+            int weekNumber = cal.get(Calendar.WEEK_OF_YEAR);
+
+            conn = DatabaseManager.getConnection();
+
+            String sql = "UPDATE weekly_finance SET "
+                    + "monday = ?, "
+                    + "tuesday = ?, "
+                    + "wednesday = ?, "
+                    + "thursday = ?, "
+                    + "friday = ?, "
+                    + "saturday = ?, "
+                    + "sunday = ?, "
+                    + "salary = ?, "
+                    + "rejection_reason = null, "
+                    + "status = ?, "
+                    + "notified = ? "
+                    + "WHERE employee_id = ? AND weekNumber = ?";
+
+            pstmt = conn.prepareStatement(sql);
+
+            double defaultSalary = 0.0;
+
+            pstmt.setDouble(1, parseLabelToHours(totalHoursMondayTF.getText()));
+            pstmt.setDouble(2, parseLabelToHours(totalHoursTuesdayTF.getText()));
+            pstmt.setDouble(3, parseLabelToHours(totalHoursWednesdayTF.getText()));
+            pstmt.setDouble(4, parseLabelToHours(totalHoursThursdayTF.getText()));
+            pstmt.setDouble(5, parseLabelToHours(totalHoursFridayTF.getText()));
+            pstmt.setDouble(6, parseLabelToHours(totalHoursSaturdayTF.getText()));
+            pstmt.setDouble(7, parseLabelToHours(totalHoursSundayTF.getText()));
+            pstmt.setDouble(8, defaultSalary);
+            pstmt.setString(9, "pending");
+            pstmt.setInt(10, 0);
+            pstmt.setInt(11, employeeId);
+            pstmt.setInt(12, weekNumber);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                String message = String.format(
+                        "Weekly hours updated successfully!\n"
+                        + "Employee ID: %d\n"
+                        + "Total hours: %s\n"
+                        + "Week number: %d",
+                        employeeId,
+                        totalWeeklyHoursTF.getText(),
+                        weekNumber
+                );
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        message,
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+
+                clearForm();
+            } else {
+                JOptionPane.showMessageDialog(this, "No existing record found to update for this employee and week",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error closing database resources: " + e.getMessage(),
+            JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(),
                     "Database Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid number format in hours",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error closing database resources: " + e.getMessage(),
+                        "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
-}
 
+    private void clearForm() {
+        configureTimeSpinners();
 
-// Add this helper method to clear the form after saving
-private void clearForm() {
-    // Reset all time spinners
-    configureTimeSpinners();
-    
-    // Clear break fields
-    mondayBreakTF.setText("");
-    tuesdayBreakTF.setText("");
-    wednesdayBreakTF.setText("");
-    thursdayBreakTF.setText("");
-    fridayBreakTF.setText("");
-    saturdayBreakTF.setText("");
-    sundayBreakTF.setText("");
-    
-    // Reset total labels
-    totalHoursMondayTF.setText("0.00 hours");
-    totalHoursTuesdayTF.setText("0.00 hours");
-    totalHoursWednesdayTF.setText("0.00 hours");
-    totalHoursThursdayTF.setText("0.00 hours");
-    totalHoursFridayTF.setText("0.00 hours");
-    totalHoursSaturdayTF.setText("0.00 hours");
-    totalHoursSundayTF.setText("0.00 hours");
-    
-    // Reset weekly total
-    totalWeeklyHoursTF.setText("0.00");
+        mondayBreakTF.setText("");
+        tuesdayBreakTF.setText("");
+        wednesdayBreakTF.setText("");
+        thursdayBreakTF.setText("");
+        fridayBreakTF.setText("");
+        saturdayBreakTF.setText("");
+        sundayBreakTF.setText("");
+
+        totalHoursMondayTF.setText("0.00 hours");
+        totalHoursTuesdayTF.setText("0.00 hours");
+        totalHoursWednesdayTF.setText("0.00 hours");
+        totalHoursThursdayTF.setText("0.00 hours");
+        totalHoursFridayTF.setText("0.00 hours");
+        totalHoursSaturdayTF.setText("0.00 hours");
+        totalHoursSundayTF.setText("0.00 hours");
+
+        totalWeeklyHoursTF.setText("0.00");
 
     }//GEN-LAST:event_saveWeeklyBtnActionPerformed
 

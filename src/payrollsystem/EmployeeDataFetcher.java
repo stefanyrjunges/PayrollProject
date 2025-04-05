@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Stefany Junges
+ */
+
 public class EmployeeDataFetcher {
 
     String idQuery, infoQuery;
@@ -16,15 +20,13 @@ public class EmployeeDataFetcher {
         idQuery = "SELECT " + idType + " FROM " + fTable + " WHERE username = ?";
         infoQuery = "SELECT * FROM " + sTable + " WHERE " + idType + " = ?";
 
-        //Establishing a connection with database
-        try (Connection con = DatabaseManager.getConnection(); //Using prepared statement to execute the query
-                 PreparedStatement ps = con.prepareStatement(idQuery)) {
-            //Passing ID parameter
+        try (Connection con = DatabaseManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(idQuery)) {
+
             ps.setString(1, session.getUser());
-            //Initializing ResultSet to hold query execution result
+
             ResultSet rs = ps.executeQuery();
 
-            //If true
             if (rs.next()) {
 
                 int userID = rs.getInt(idType);
@@ -34,7 +36,6 @@ public class EmployeeDataFetcher {
                     ps2.setInt(1, userID);
                     ResultSet rs2 = ps2.executeQuery();
 
-                    //if true
                     if (rs2.next()) {
                         String fName = rs2.getString("fname");
                         String lName = rs2.getString("lname");
@@ -66,13 +67,10 @@ public class EmployeeDataFetcher {
                 }
 
             } else {
-
                 System.out.println("No user found");
-
             }
 
         } catch (SQLException e) {
-            //Handle database error
             System.out.println("Error accessing database: " + e);
         }
 

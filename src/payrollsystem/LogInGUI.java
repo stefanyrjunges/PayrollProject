@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package payrollsystem;
 
 import java.awt.Color;
@@ -9,9 +5,9 @@ import javax.swing.JOptionPane;
 import javax.swing.*;
 
 /**
- *
  * @author Stefany Junges
  */
+
 public class LogInGUI extends javax.swing.JFrame {
 
     private boolean isManagerSelected = false;
@@ -329,9 +325,8 @@ public class LogInGUI extends javax.swing.JFrame {
             SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
                 @Override
                 protected Boolean doInBackground() {
-                    boolean verify = false; // Default to false
+                    boolean verify = false;
 
-                    // Check user identity
                     if (isEmployeeSelected) {
                         verify = vl.checkCredentials("employee_logins", userTF.getText().trim(), new String(passwordTF.getPassword()));
                     } else if (isManagerSelected) {
@@ -343,11 +338,10 @@ public class LogInGUI extends javax.swing.JFrame {
 
                 @Override
                 protected void done() {
-                    // Close the loading popup
                     SwingUtilities.invokeLater(() -> loadingDialog.dispose());
 
                     try {
-                        boolean verify = get(); // Get result from doInBackground
+                        boolean verify = get();
 
                         if (verify) {
                             if (isEmployeeSelected){
@@ -356,7 +350,6 @@ public class LogInGUI extends javax.swing.JFrame {
                                 empDashboard.setVisible(true);
                                 dispose();
                             } else {
-                                // Successful login, set session and open Payroll GUI
                                 sm.setUser(userTF.getText().trim());
                                 ManagerDashboard mngDashboard = new ManagerDashboard();
                                 mngDashboard.setVisible(true);
@@ -371,7 +364,7 @@ public class LogInGUI extends javax.swing.JFrame {
                 }
             };
 
-            worker.execute(); // Start the background task
+            worker.execute();
 
         }
     }//GEN-LAST:event_loginBTNActionPerformed

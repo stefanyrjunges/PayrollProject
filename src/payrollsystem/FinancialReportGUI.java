@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package payrollsystem;
 
 import javax.swing.JOptionPane;
@@ -9,9 +5,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
- *
- * @author stefa
+ * @author Stefany Junges
  */
+
 public class FinancialReportGUI extends javax.swing.JFrame {
 
     private final EmployeeDataFetcher dataFetcher = new EmployeeDataFetcher();

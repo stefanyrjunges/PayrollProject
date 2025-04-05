@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+/**
+ * @author Stefany Junges
+ */
+
 public class EmployeeNotification {
 
     public boolean notifyEmployee(int id) {

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package payrollsystem;
 
 import java.awt.Dimension;
@@ -17,7 +13,7 @@ import java.sql.*;
 
 /**
  *
- * @author tenhe
+ * @author Filip
  */
 public class ManageEmployee extends javax.swing.JFrame {
 
@@ -35,27 +31,23 @@ public class ManageEmployee extends javax.swing.JFrame {
         connectToDatabase();
         addTableClickListener();
 
-        // Set table model with the appropriate column names
         tableModel = new DefaultTableModel(
                 new Object[][]{},
                 new String[]{"ID", "Name", "Surname", "Position", "Rate", "Address", "Phone", "Email", "Hire Date"}
         );
         employeeTable.setModel(tableModel);
 
-        // Fetch employees after the table model is set
         fetchEmployees();
 
-        // Set window dimensions and properties
         setPreferredSize(new Dimension(1520, 715));
-        setMinimumSize(new Dimension(1520, 715)); // Prevent window from shrinking too small
+        setMinimumSize(new Dimension(1520, 715));
         setTitle("Employee Management");
         setResizable(true);
     }
 
-    // Database connection method
     public void connectToDatabase() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // Load the MySQL driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(
                     "jdbc:mysql://database-1.cvu4aceii2zn.eu-west-1.rds.amazonaws.com:3306/Payroll",
                     "root",
@@ -68,15 +60,13 @@ public class ManageEmployee extends javax.swing.JFrame {
         }
     }
 
-    // Add a listener to the employee table rows for clicking
     private void addTableClickListener() {
         employeeTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int selectedRow = employeeTable.getSelectedRow(); // Get the selected row index
+                int selectedRow = employeeTable.getSelectedRow();
 
                 if (selectedRow != -1) {
-                    // Populate text fields with the selected row's data
                     empIdTF.setText(tableModel.getValueAt(selectedRow, 0).toString()); // ID
                     fnameTF.setText(tableModel.getValueAt(selectedRow, 1).toString()); // First Name
                     lnameTF.setText(tableModel.getValueAt(selectedRow, 2).toString()); // Last Name
@@ -91,17 +81,14 @@ public class ManageEmployee extends javax.swing.JFrame {
         });
     }
 
-    // Method to fetch employees from the database and populate the table
     public void fetchEmployees() {
         try {
             String sql = "SELECT employee_id, fname, lname, position, rate, address, phoneN, email, hire_date FROM employees";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
-            // Clear the table first
             tableModel.setRowCount(0);
 
-            // Populate the table with fetched data
             while (resultSet.next()) {
                 String employeeId = resultSet.getString("employee_id");
                 String fname = resultSet.getString("fname");
@@ -109,11 +96,11 @@ public class ManageEmployee extends javax.swing.JFrame {
                 String position = resultSet.getString("position");
                 String rate = resultSet.getString("rate");
                 String address = resultSet.getString("address");
-                String phoneN = resultSet.getString("phoneN");  // Correct phone number column
-                String email = resultSet.getString("email");    // Correct email column
-                String hireDate = resultSet.getString("hire_date");  // Correct hire date column
+                String phoneN = resultSet.getString("phoneN"); 
+                String email = resultSet.getString("email");  
+                String hireDate = resultSet.getString("hire_date");
 
-                // Add the data to the table model
+ 
                 tableModel.addRow(new Object[]{
                     employeeId, fname, lname, position, rate, address, phoneN, email, hireDate
                 });
@@ -544,11 +531,10 @@ public class ManageEmployee extends javax.swing.JFrame {
         String position = positionTF.getText();
         String rate = rateTF.getText();
         String address = addressTF.getText();
-        String phoneN = phoneNumberTF.getText(); // Get phone number
-        String email = emailTF.getText(); // Get email
-        String hireDate = hireDateTF.getText(); // Get hire date
+        String phoneN = phoneNumberTF.getText();
+        String email = emailTF.getText(); 
+        String hireDate = hireDateTF.getText(); 
 
-        // Check if any field is empty
         if (employee_id.isEmpty() || fname.isEmpty() || lname.isEmpty() || position.isEmpty() || rate.isEmpty() || address.isEmpty() || phoneN.isEmpty() || email.isEmpty() || hireDate.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields!", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
@@ -578,9 +564,9 @@ public class ManageEmployee extends javax.swing.JFrame {
             statement.setString(4, position);
             statement.setDouble(5, Double.parseDouble(rate));
             statement.setString(6, address);
-            statement.setString(7, phoneN); // Set phone number
-            statement.setString(8, email); // Set email
-            statement.setString(9, hireDate); // Set hire date
+            statement.setString(7, phoneN); 
+            statement.setString(8, email);
+            statement.setString(9, hireDate);
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -588,7 +574,7 @@ public class ManageEmployee extends javax.swing.JFrame {
                     employee_id, fname, lname, position, rate, address, phoneN, email, hireDate
                 });
                 JOptionPane.showMessageDialog(this, "Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                clearFields(); // Reset the input fields after adding
+                clearFields();
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error adding employee to database! Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -682,13 +668,11 @@ public class ManageEmployee extends javax.swing.JFrame {
 
             if (confirmation == JOptionPane.YES_OPTION) {
                 try {
-                    // First delete from employee_logins
                     String deleteLoginSQL = "DELETE FROM employee_logins WHERE employee_id = ?";
                     PreparedStatement loginStatement = connection.prepareStatement(deleteLoginSQL);
                     loginStatement.setInt(1, Integer.parseInt(employee_id));
                     loginStatement.executeUpdate();
 
-                    // Then delete from employees
                     String deleteEmployeeSQL = "DELETE FROM employees WHERE employee_id = ?";
                     PreparedStatement employeeStatement = connection.prepareStatement(deleteEmployeeSQL);
                     employeeStatement.setInt(1, Integer.parseInt(employee_id));
@@ -724,7 +708,6 @@ public class ManageEmployee extends javax.swing.JFrame {
         if (empIdTF.getText().isEmpty() && fnameTF.getText().isEmpty() && positionTF.getText().isEmpty() && rateTF.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Fields are already empty. Nothing to clear.");
         } else {
-            // Clear the fields if they are not empty
             clearFields();
         }
     }//GEN-LAST:event_clearBTNActionPerformed

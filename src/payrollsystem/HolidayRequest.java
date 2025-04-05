@@ -1,17 +1,20 @@
 package payrollsystem;
 
+/**
+ * @author Felipe Paneque
+ */
+
 public class HolidayRequest {
 
     private int holidayId;
     private int employeeId;
     private String startWeek;
     private String endWeek;
-    private String employeeReason; // New field
+    private String employeeReason;
 
     public HolidayRequest() {
     }
 
-    // Constructor including the employee reason
     public HolidayRequest(int holidayId, int employeeId, String startWeek, String endWeek, String employeeReason) {
         this.holidayId = holidayId;
         this.employeeId = employeeId;

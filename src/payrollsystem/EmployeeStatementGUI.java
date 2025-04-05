@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package payrollsystem;
 
 import java.io.IOException;
@@ -10,6 +6,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+
+/**
+ * @author Stefany Junges
+ */
 
 public class EmployeeStatementGUI extends javax.swing.JFrame {
     
@@ -253,12 +253,10 @@ public class EmployeeStatementGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void generatePreviousBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatePreviousBTNActionPerformed
-        
+
         openBTN.setVisible(true);
         scrollPane.setVisible(true);
 
-//        sm.generateFinancialReport();
-//        JOptionPane.showMessageDialog(null, "Statement saved.", "Success", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_generatePreviousBTNActionPerformed
 
     private void generateBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBTNActionPerformed

@@ -20,6 +20,10 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
+/**
+ * @author Stefany Junges
+ */
+
 public class StatementGenerator {
 
     private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
@@ -154,7 +158,7 @@ public class StatementGenerator {
                 }
             }
 
-        }//first if
+        }
 
         pdfList.setModel(listModel);
 

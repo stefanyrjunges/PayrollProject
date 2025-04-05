@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package payrollsystem;
 
 import java.sql.*;
@@ -9,7 +5,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author paneq
+ * @author Felipe Paneque
  */
 public class HolidayRequestGUI extends javax.swing.JFrame {
 
@@ -215,17 +211,15 @@ public class HolidayRequestGUI extends javax.swing.JFrame {
         return employeeId;
     }
     private void requestBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestBTNActionPerformed
-        // TODO add your handling code here:
+
         String fromWeekText = fromWeekTF.getText().trim();
         String toWeekText = toWeekTF.getText().trim();
         String reason = reasonTF.getText().trim();  
         
         String username = SessionManager.getInstance().getUser();
 
-        // Fetch employee ID from database
         int employeeId = getEmployeeID(username);
 
-        // Check if ID is valid
         if (employeeId == -1) {
             JOptionPane.showMessageDialog(null, "Error: No valid user session.");
             return;
@@ -244,7 +238,6 @@ public class HolidayRequestGUI extends javax.swing.JFrame {
                 return;
             }
 
-            // Insert into database
             if (insertHolidayRequest(employeeId, fromWeek, toWeek, reason)) {
                 JOptionPane.showMessageDialog(null, "Your holiday request was submitted successfully!");
                 fromWeekTF.setText("");

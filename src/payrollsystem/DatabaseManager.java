@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * @author Stefany Junges, Felipe Paneque
+ */
+
 public class DatabaseManager {
 
     private static String DB_URL;

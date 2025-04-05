@@ -253,14 +253,14 @@ public class EmployeeGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void statementBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statementBTNActionPerformed
-        // TODO add your handling code here:
+
         EmployeeStatementGUI statementGui = new EmployeeStatementGUI();
         statementGui.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_statementBTNActionPerformed
 
     private void salaryBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salaryBTNActionPerformed
-        // TODO add your handling code here:
+
         EmployeeSalaryGUI salaryGui = new EmployeeSalaryGUI();
         salaryGui.setVisible(true);
         this.dispose();

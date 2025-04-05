@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package payrollsystem;
 import javax.swing.JOptionPane;
 
@@ -11,12 +7,10 @@ import javax.swing.JOptionPane;
 
 public class ResetPasswordGUI extends javax.swing.JFrame {
    
-    //Calling a new instance of PasswordManager class
     private PasswordManager rp = new PasswordManager();
     
     public ResetPasswordGUI() {
         initComponents();
-        //Setting elements to be invisible when window opens
         newPassLBL.setVisible(false);
         newPassTF.setVisible(false);
         submitBTN.setVisible(false);
@@ -220,23 +214,18 @@ public class ResetPasswordGUI extends javax.swing.JFrame {
 
     private void submitBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBTNActionPerformed
 
-        //Using a boolean to check if the password was updated or not
         boolean isUpdated = true;
 
-        //Passing values to the method that handles password updates
         if (employeeCB.isSelected()){
             isUpdated = rp.updatePassword("employee_logins", "employee_id", idTF.getText(), usernameTF.getText(), newPassTF.getText());
         } else if (managerCB.isSelected()){
             isUpdated = rp.updatePassword("manager_logins", "manager_id", idTF.getText(), usernameTF.getText(), newPassTF.getText());
         } else {
-            //If nothing was selected, show message to user
             JOptionPane.showMessageDialog(null, "Please choose Manager or Employee");
         }
 
-        //Depending on whether password was successfully updated or not, show message to user
         if (isUpdated){
             JOptionPane.showMessageDialog(null, "Password updated.");
-            //Close the window
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Error updating password. Please try again later.");
@@ -245,13 +234,11 @@ public class ResetPasswordGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_submitBTNActionPerformed
 
     private boolean checkEmpty(){
-        //Show message to user if form is empty
         if (idTF.getText().isEmpty() || usernameTF.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Please fill in all the forms.");
             return false;
         }
         
-        //Show message to user if checkbox wasn't selected
         if (!employeeCB.isSelected() && !managerCB.isSelected()){
             JOptionPane.showMessageDialog(null, "Please choose Manager or Employee."); 
             return false;
@@ -262,19 +249,15 @@ public class ResetPasswordGUI extends javax.swing.JFrame {
     
     private void verifyBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyBTNActionPerformed
         
-        //If all form is filled, proceed
         if (checkEmpty()){
-            //Using a boolean to check if identity was verified
             boolean verify;
             
-            //Passing values to the method that handles identity checking
             if (employeeCB.isSelected()){
                 verify = rp.checkIdentity("employee_logins", "employee_id", idTF.getText().trim(), usernameTF.getText().trim());
             } else {
                 verify = rp.checkIdentity("manager_logins", "manager_id", idTF.getText().trim(), usernameTF.getText().trim());
             }
             
-            //Depending on whether the identity has been verified or not, show message to user
             if (verify){
                 infoTA.setText("Thank you for verifying your identity.\n\nChoose your new password:");
                 newPassLBL.setVisible(true);
@@ -292,11 +275,10 @@ public class ResetPasswordGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_verifyBTNActionPerformed
 
     private void showPassBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPassBTNActionPerformed
-        //If button is selected, show password
+
         if (showPassBTN.isSelected()) {
             newPassTF.setEchoChar((char) 0);
         } else {
-            //If not, keep it hidden
             newPassTF.setEchoChar('•');
         }
     }//GEN-LAST:event_showPassBTNActionPerformed

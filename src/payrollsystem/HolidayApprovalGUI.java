@@ -26,7 +26,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 /**
  *
- * @author paneq
+ * @author Felipe Paneque
  */
 public class HolidayApprovalGUI extends javax.swing.JFrame { 
     

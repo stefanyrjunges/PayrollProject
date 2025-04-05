@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author Stefany Junges
+ */
 public class PasswordManager {
 
     String query;
@@ -16,9 +19,8 @@ public class PasswordManager {
 
         query = "SELECT * FROM " + table + " WHERE " + idType + " = ? AND username = ?";
 
-        try (Connection con = DatabaseManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(query)) {
-            
+        try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement(query)) {
+
             ps.setString(1, id);
             ps.setString(2, username);
 

@@ -1,5 +1,9 @@
 package payrollsystem;
 
+/**
+ * @author Stefany Junges
+ */
+
 public class SessionManager {
 
     private static SessionManager instance = null;
@@ -34,6 +38,6 @@ public class SessionManager {
     }
 
     public void clearSession() {
-        instance = null; // Clear session on logout
+        instance = null;
     }
 }

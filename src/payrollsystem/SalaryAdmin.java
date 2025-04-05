@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * SalaryAdmin.java February 2025
- *
  * @author Murilo Batiuk
  */
 public class SalaryAdmin {

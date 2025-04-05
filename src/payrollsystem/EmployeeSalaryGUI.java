@@ -9,7 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 /**
- * DatabaseManager.java February 2025
  * @author Murilo Batiuk
  */
 public class EmployeeSalaryGUI extends javax.swing.JFrame {
