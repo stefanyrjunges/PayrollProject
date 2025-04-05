@@ -45,7 +45,7 @@ public class LogInGUI extends javax.swing.JFrame {
         forgotBTN = new javax.swing.JButton();
         detailsLBL = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        computerICON = new javax.swing.JLabel();
         blueICON = new javax.swing.JLabel();
         orangeICON = new javax.swing.JLabel();
         showPassBTN = new javax.swing.JToggleButton();
@@ -188,7 +188,7 @@ public class LogInGUI extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(248, 248, 248));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/laptop.png"))); // NOI18N
+        computerICON.setIcon(new javax.swing.ImageIcon(getClass().getResource("/payrollsystem/laptop.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -196,14 +196,14 @@ public class LogInGUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(28, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(computerICON, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(78, 78, 78)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(computerICON, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -467,11 +467,11 @@ public class LogInGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel blueICON;
+    private javax.swing.JLabel computerICON;
     private javax.swing.JLabel detailsLBL;
     private javax.swing.JPanel dialogPanel1;
     private javax.swing.JButton employeeBTN;
     private javax.swing.JButton forgotBTN;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JDialog loadingDialog;

@@ -7,6 +7,8 @@ package payrollsystem;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 /**
  * @author Murilo Batiuk
@@ -15,9 +17,8 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
 
     private final EmployeeInfo employeeInfo = EmployeeInfo.getInstance();
     private final JTable financeTable;
-    private final SalaryAdmin salaryAdmin;
     private final EmployeeDataFetcher dataFetcher = new EmployeeDataFetcher();
-    private final SalaryAdmin Admin = new SalaryAdmin();
+    private final SalaryAdmin salaryAdmin = new SalaryAdmin();
 
     /**
      * Creates new form PayrollGUI
@@ -26,8 +27,6 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
         initComponents();
 
         dataFetcher.loadUserInformation("employee_id", "employee_logins", "employees");
-
-        salaryAdmin = new SalaryAdmin();
 
         String[] columnNames = {"Week", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Total Hours", "Total After Taxes"};
         financeTable = new JTable(new DefaultTableModel(columnNames, 0));
@@ -42,6 +41,10 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        loadingDialog = new javax.swing.JDialog();
+        dialogPanel1 = new javax.swing.JPanel();
+        loadingLBL1 = new javax.swing.JLabel();
+        progressBar = new javax.swing.JProgressBar();
         jPanel1 = new javax.swing.JPanel();
         maintitleLBL = new javax.swing.JLabel();
         orangelogoLBL = new javax.swing.JLabel();
@@ -63,6 +66,52 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
         novemberBTN = new javax.swing.JButton();
         decemberBTN = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+
+        loadingDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        loadingDialog.setTitle("Loading...");
+
+        dialogPanel1.setName(""); // NOI18N
+
+        loadingLBL1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        loadingLBL1.setForeground(new java.awt.Color(81, 81, 81));
+        loadingLBL1.setText("Loading...");
+
+        progressBar.setIndeterminate(true);
+
+        javax.swing.GroupLayout dialogPanel1Layout = new javax.swing.GroupLayout(dialogPanel1);
+        dialogPanel1.setLayout(dialogPanel1Layout);
+        dialogPanel1Layout.setHorizontalGroup(
+            dialogPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogPanel1Layout.createSequentialGroup()
+                .addGroup(dialogPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(dialogPanel1Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(loadingLBL1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        dialogPanel1Layout.setVerticalGroup(
+            dialogPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(loadingLBL1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout loadingDialogLayout = new javax.swing.GroupLayout(loadingDialog.getContentPane());
+        loadingDialog.getContentPane().setLayout(loadingDialogLayout);
+        loadingDialogLayout.setHorizontalGroup(
+            loadingDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dialogPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        loadingDialogLayout.setVerticalGroup(
+            loadingDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dialogPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -483,17 +532,39 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_returnBTNActionPerformed
 
     private void loadFinanceData(int month) {
+        loadingDialog.setSize(210, 100);
+        loadingDialog.setLocationRelativeTo(null);
+        SwingUtilities.invokeLater(() -> loadingDialog.setVisible(true));
 
-        int employeeId = employeeInfo.getId();
-        List<Object[]> financeData = Admin.loadEmployeeFinance(employeeId, month);
+        SwingWorker<List<Object[]>, Void> worker = new SwingWorker<>() {
+            @Override
+            protected List<Object[]> doInBackground() {
+                int employeeId = employeeInfo.getId();
+                List<Object[]> financeData = salaryAdmin.loadEmployeeFinance(employeeId, month);
+                return financeData;
+            }
 
-        DefaultTableModel model = (DefaultTableModel) weektableTBL.getModel();
-        model.setRowCount(0); 
+            @Override
+            protected void done() {
+                try {
+                    List<Object[]> financeData = get();
 
-        for (Object[] row : financeData) {
-            model.addRow(row);
-        }
+                    SwingUtilities.invokeLater(() -> {
+                        DefaultTableModel model = (DefaultTableModel) weektableTBL.getModel();
+                        model.setRowCount(0);
+                        for (Object[] row : financeData) {
+                            model.addRow(row);
+                        }
+                        loadingDialog.dispose();
+                    });
 
+                } catch (Exception e) {
+                    e.printStackTrace(); // Handle exceptions
+                }
+            }
+        };
+
+        worker.execute();
     }
 
     /**
@@ -542,6 +613,7 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
     private javax.swing.JButton aprilBTN;
     private javax.swing.JButton augustBTN;
     private javax.swing.JButton decemberBTN;
+    private javax.swing.JPanel dialogPanel1;
     private javax.swing.JButton februaryBTN;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel;
@@ -549,12 +621,15 @@ public class EmployeeSalaryGUI extends javax.swing.JFrame {
     private javax.swing.JButton januaryBTN;
     private javax.swing.JButton julyBTN;
     private javax.swing.JButton juneBTN;
+    private javax.swing.JDialog loadingDialog;
+    private javax.swing.JLabel loadingLBL1;
     private javax.swing.JLabel maintitleLBL;
     private javax.swing.JButton marchBTN;
     private javax.swing.JButton mayBTN;
     private javax.swing.JButton novemberBTN;
     private javax.swing.JButton octoberBTN;
     private javax.swing.JLabel orangelogoLBL;
+    private javax.swing.JProgressBar progressBar;
     private javax.swing.JButton returnBTN;
     private javax.swing.JLabel selectmonthLBL;
     private javax.swing.JButton septemberBTN;
