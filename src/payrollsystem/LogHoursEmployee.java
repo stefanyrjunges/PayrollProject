@@ -340,7 +340,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         jPanel2.add(totalHoursThursdayTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 180, -1, -1));
 
         sundayBreakTF.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPanel2.add(sundayBreakTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 100, 170, -1));
+        jPanel2.add(sundayBreakTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 100, 170, -1));
 
         tuesdayLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         tuesdayLabel5.setForeground(new java.awt.Color(81, 81, 81));
@@ -444,7 +444,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
         jPanel2.add(mondayTimeOutSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 62, -1, -1));
 
         fridayBreakTF.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPanel2.add(fridayBreakTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 280, 200, -1));
+        jPanel2.add(fridayBreakTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 280, 200, -1));
 
         totalWeeklyHoursTF.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jPanel2.add(totalWeeklyHoursTF, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 280, 162, -1));
@@ -486,13 +486,13 @@ public class LogHoursEmployee extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(81, 81, 81));
-        jLabel1.setText("BREAK:");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 97, 69, -1));
+        jLabel1.setText("BREAK (min):");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 97, 100, -1));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(81, 81, 81));
-        jLabel2.setText("BREAK:");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 63, -1));
+        jLabel2.setText("BREAK (min):");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 100, -1));
 
         tuesdayCalculateBtn.setBackground(new java.awt.Color(237, 170, 12));
         tuesdayCalculateBtn.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -509,7 +509,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(81, 81, 81));
-        jLabel3.setText("BREAK:");
+        jLabel3.setText("BREAK (min):");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 470, -1, -1));
 
         returnBTN.setBackground(new java.awt.Color(237, 170, 12));
@@ -527,8 +527,8 @@ public class LogHoursEmployee extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(81, 81, 81));
-        jLabel4.setText("BREAK:");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, 69, -1));
+        jLabel4.setText("BREAK (min):");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, 100, -1));
 
         thursdayCalculateBtn.setBackground(new java.awt.Color(237, 170, 12));
         thursdayCalculateBtn.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -540,8 +540,8 @@ public class LogHoursEmployee extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(81, 81, 81));
-        jLabel5.setText("BREAK:");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 69, -1));
+        jLabel5.setText("BREAK (min):");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 100, -1));
 
         fridayCalculateBtn.setBackground(new java.awt.Color(237, 170, 12));
         fridayCalculateBtn.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -558,7 +558,7 @@ public class LogHoursEmployee extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(81, 81, 81));
-        jLabel6.setText("BREAK:");
+        jLabel6.setText("BREAK (min):");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, -1));
 
         saturdayCalculateBtn.setBackground(new java.awt.Color(237, 170, 12));
@@ -571,8 +571,8 @@ public class LogHoursEmployee extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(81, 81, 81));
-        jLabel7.setText("BREAK:");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 100, 69, -1));
+        jLabel7.setText("BREAK (min):");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 100, 100, -1));
 
         sundayCalculateBtn.setBackground(new java.awt.Color(237, 170, 12));
         sundayCalculateBtn.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
